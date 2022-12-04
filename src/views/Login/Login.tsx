@@ -24,7 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function Login() {
     const nav = useNavigation();
 
-    const [inputName, setInputName] = useState("");
+    const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
 
     //const link = (text: string) => <TextButtonLogin style={{ color: '#7B5BF2' }} onPress={() => nav.navigate("Cadastre-se")}>{ text }</TextButtonLogin>
@@ -36,8 +36,8 @@ export default function Login() {
                 <FormLogin>
                     <WrapperInputs>
                         <InputsLogin
-                            onChangeText={setInputName}
-                            value={inputName}
+                            onChangeText={setInputEmail}
+                            value={inputEmail}
                             placeholder='Email'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
                         />
