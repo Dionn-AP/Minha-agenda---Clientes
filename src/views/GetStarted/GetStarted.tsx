@@ -10,7 +10,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useState } from 'react';
-import { View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { useNavigation } from "@react-navigation/native";
 
@@ -43,7 +42,6 @@ const ThirdRoute = () => (
 );
 
 export default function GetStarted() {
-    const nav = useNavigation();
 
     const [index, setIndex] = useState(0);
     const [routes] = useState([
