@@ -27,6 +27,8 @@ export default function Signup() {
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
+    const [inputConfirmPassword, setInputConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(true);
 
     // const link = (text: string) => <TextButtonLogin style={{ color: '#7B5BF2' }} onPress={() => nav.navigate("Cadastre-se")}>{ text }</TextButtonLogin>
 
@@ -69,6 +71,7 @@ export default function Signup() {
                             value={inputPassword}
                             placeholder='Senha'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
+                            secureTextEntry={showPassword}
                         />
                         <ButtonInputs style={{ left: 8 }}>
                             <MaterialIcons
@@ -76,19 +79,22 @@ export default function Signup() {
                                 size={34}
                                 color="#808085" />
                         </ButtonInputs>
-                        <ButtonInputs style={{ top: 11, right: 10 }}>
+                        <ButtonInputs style={{ top: 16, right: 10 }}
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
                             <Feather
-                                name="eye-off"
+                                name={showPassword ? "eye-off" : "eye"}
                                 size={28}
                                 color="#808085" />
                         </ButtonInputs>
                     </WrapperInputs>
                     <WrapperInputs>
                         <InputsSignup
-                            onChangeText={setInputPassword}
-                            value={inputPassword}
+                            onChangeText={setInputConfirmPassword}
+                            value={inputConfirmPassword}
                             placeholder='Confirma sua senha'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
+                            secureTextEntry={showPassword}
                         />
                         <ButtonInputs style={{ left: 8 }}>
                             <MaterialIcons
@@ -96,9 +102,11 @@ export default function Signup() {
                                 size={34}
                                 color="#808085" />
                         </ButtonInputs>
-                        <ButtonInputs style={{ top: 11, right: 10 }}>
+                        <ButtonInputs style={{ top: 16, right: 10 }}
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
                             <Feather
-                                name="eye-off"
+                                name={showPassword ? "eye-off" : "eye"}
                                 size={28}
                                 color="#808085" />
                         </ButtonInputs>
