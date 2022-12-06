@@ -24,13 +24,13 @@ import {
 } from '@expo/vector-icons'
 
 export default function Signup() {
+    const nav = useNavigation();
+
     const [inputName, setInputName] = useState("");
     const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     const [inputConfirmPassword, setInputConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(true);
-
-    // const link = (text: string) => <TextButtonLogin style={{ color: '#7B5BF2' }} onPress={() => nav.navigate("Cadastre-se")}>{ text }</TextButtonLogin>
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -43,6 +43,7 @@ export default function Signup() {
                             value={inputName}
                             placeholder='Nome'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
+                            autoCapitalize="none"
                         />
                         <ButtonInputs style={{ left: 10 }}>
                             <FontAwesome5
@@ -57,6 +58,7 @@ export default function Signup() {
                             value={inputEmail}
                             placeholder='Email'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
+                            autoCapitalize="none"
                         />
                         <ButtonInputs style={{ left: 8 }}>
                             <MaterialCommunityIcons
@@ -72,6 +74,7 @@ export default function Signup() {
                             placeholder='Senha'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
                             secureTextEntry={showPassword}
+                            autoCapitalize="none"
                         />
                         <ButtonInputs style={{ left: 8 }}>
                             <MaterialIcons
@@ -95,6 +98,7 @@ export default function Signup() {
                             placeholder='Confirma sua senha'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
                             secureTextEntry={showPassword}
+                            autoCapitalize="none"
                         />
                         <ButtonInputs style={{ left: 8 }}>
                             <MaterialIcons
@@ -116,11 +120,13 @@ export default function Signup() {
                     </ButtonSignup>
                 </FormSignup>
                 <WrapperTextBottomLogin>
-                    {/* <TexBottomLogin>
-                        Já possui uma conta, {link("login!")}
-                    </TexBottomLogin> */}
-                    <TexBottomLogin>
-                        Já possui uma conta, <TexBottomLogin style={{ color: "#7B5BF2" }}>login!</TexBottomLogin>
+                    <TexBottomLogin style={{ marginRight: 4 }}>
+                        Já possui uma conta,
+                    </TexBottomLogin>
+                    <TexBottomLogin style={{ color: "#7B5BF2" }}
+                        onPress={() => nav.navigate("Login")}
+                    >
+                        login!
                     </TexBottomLogin>
                 </WrapperTextBottomLogin>
             </WrapperSignup>
