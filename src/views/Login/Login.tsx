@@ -12,11 +12,16 @@ import {
     WrapperTextBottomLogin,
     ButtonInputs
 } from './Login_Styled';
+import { TouchableHighlight } from 'react-native';
 
-import { MaterialCommunityIcons, EvilIcons, MaterialIcons } from '@expo/vector-icons'
+import {
+    MaterialCommunityIcons,
+    Feather,
+    MaterialIcons
+} from '@expo/vector-icons'
 
 import { useState } from 'react';
-
+import { upperCaseName } from '../../utils/services';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 
@@ -26,6 +31,7 @@ export default function Login() {
 
     const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(true);
 
     //const link = (text: string) => <TextButtonLogin style={{ color: '#7B5BF2' }} onPress={() => nav.navigate("Cadastre-se")}>{ text }</TextButtonLogin>
 
@@ -40,8 +46,9 @@ export default function Login() {
                             value={inputEmail}
                             placeholder='Email'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
+                            autoCapitalize="none"
                         />
-                        <ButtonInputs>
+                        <ButtonInputs style={{ left: 8 }}>
                             <MaterialCommunityIcons
                                 name="email-outline"
                                 size={34} color="#808085"
@@ -55,33 +62,40 @@ export default function Login() {
                             value={inputPassword}
                             placeholder='Senha'
                             placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
+                            secureTextEntry={showPassword}
+                            autoCapitalize="none"
                         />
-                        <ButtonInputs>
-                            {/* <EvilIcons
-                                name="lock"
-                                size={52}
-                                color="#808085"
-                            /> */}
-                            <MaterialIcons 
-                            name="lock-outline" 
-                            size={34} 
-                            color="#808085" />
+                        <ButtonInputs style={{ left: 8 }}>
+                            <MaterialIcons
+                                name="lock-outline"
+                                size={34}
+                                color="#808085" />
+                        </ButtonInputs>
+                        <ButtonInputs style={{ top: 16, right: 10 }}
+                            onPress={() => setShowPassword(!showPassword)}
+                        >
+                            <Feather
+                                name={showPassword ? "eye-off" : "eye"}
+                                size={28}
+                                color="#808085" />
                         </ButtonInputs>
                     </WrapperInputs>
 
                     <ButtonLogin
-                    activeOpacity={0.7}
+                        activeOpacity={0.7}
                     >
                         <TextButtonLogin>ENTRAR</TextButtonLogin>
                     </ButtonLogin>
                 </FormLogin>
                 <TextForgot>Esqueci minha senha</TextForgot>
                 <WrapperTextBottomLogin>
-                    {/* <TexBottomLogin>
-                        Novo por aqui, {link("cadastre-se!")}
-                    </TexBottomLogin> */}
-                    <TexBottomLogin>
-                        Novo por aqui, <TexBottomLogin style={{ color: "#7B5BF2" }}>cadastre-se!</TexBottomLogin>
+                    <TexBottomLogin style={{ marginRight: 4 }}>
+                        Novo por aqui,
+                    </TexBottomLogin>
+                    <TexBottomLogin style={{ color: "#7B5BF2" }}
+                        onPress={() => nav.navigate("Signup")}
+                    >
+                        cadastre-se!
                     </TexBottomLogin>
                 </WrapperTextBottomLogin>
             </WrapperLogin>
