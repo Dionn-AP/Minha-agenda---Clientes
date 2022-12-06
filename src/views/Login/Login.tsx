@@ -80,6 +80,7 @@ export default function Login() {
                     </WrapperInputs>
 
                     <ButtonLogin
+                        onPress={() => nav.navigate("Bem-Vindo")}
                         activeOpacity={0.7}
                     >
                         <TextButtonLogin>ENTRAR</TextButtonLogin>
