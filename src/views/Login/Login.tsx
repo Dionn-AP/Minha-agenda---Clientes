@@ -12,7 +12,6 @@ import {
     WrapperTextBottomLogin,
     ButtonInputs
 } from './Login_Styled';
-import { TouchableHighlight } from 'react-native';
 
 import {
     MaterialCommunityIcons,
@@ -21,7 +20,6 @@ import {
 } from '@expo/vector-icons'
 
 import { useState } from 'react';
-import { upperCaseName } from '../../utils/services';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 
@@ -87,7 +85,11 @@ export default function Login() {
                         <TextButtonLogin>ENTRAR</TextButtonLogin>
                     </ButtonLogin>
                 </FormLogin>
-                <TextForgot>Esqueci minha senha</TextForgot>
+                <TextForgot
+                    onPress={() => nav.navigate("Recuperar Senha")}
+                >
+                    Esqueci minha senha
+                </TextForgot>
                 <WrapperTextBottomLogin>
                     <TexBottomLogin style={{ marginRight: 4 }}>
                         Novo por aqui,
