@@ -14,10 +14,10 @@ export default function AppStack() {
                 headerShown: false,
             }}
         >
-            <Screen name="Bem-Vindo" component={GetStarted} />
             <Screen name="Login" component={Login} />
             <Screen name="Signup" component={Signup} />
             <Screen name="Recuperar Senha" component={RecoveryPassword} />
+            <Screen name="Bem-Vindo" component={GetStarted} />
         </Navigator>
     );
 }
