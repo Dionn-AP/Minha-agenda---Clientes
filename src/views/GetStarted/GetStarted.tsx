@@ -11,7 +11,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useState } from 'react';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { useNavigation } from "@react-navigation/native";
 
 import GetStartedView from '../../components/GetStartedView';
 
