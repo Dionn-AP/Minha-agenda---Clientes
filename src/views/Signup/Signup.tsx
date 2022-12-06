@@ -115,7 +115,9 @@ export default function Signup() {
                                 color="#808085" />
                         </ButtonInputs>
                     </WrapperInputs>
-                    <ButtonSignup>
+                    <ButtonSignup
+                    onPress={() => nav.navigate("Confirmar Cadastro")}
+                    >
                         <TextButtonSignup>CADASTRAR</TextButtonSignup>
                     </ButtonSignup>
                 </FormSignup>
