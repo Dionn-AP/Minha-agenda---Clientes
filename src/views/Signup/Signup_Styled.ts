@@ -62,7 +62,8 @@ export const WrapperInputs = styled.View`
 `
 
 export const WrapperTextBottomLogin = styled.View`
-
+    display: flex;
+    flex-direction: row;
 `
 
 export const TexBottomLogin = styled.Text`
