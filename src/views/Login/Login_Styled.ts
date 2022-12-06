@@ -53,7 +53,6 @@ export const WrapperInputs = styled.View`
 export const ButtonInputs = styled.TouchableOpacity`
     position: absolute;
     top: 12px;
-    left: 8px;
     opacity: 0.7;
 `
 
@@ -76,7 +75,8 @@ export const TextForgot = styled.Text`
 `
 
 export const WrapperTextBottomLogin = styled.View`
-
+    display: flex;
+    flex-direction: row;
 `
 
 export const TexBottomLogin = styled.Text`
