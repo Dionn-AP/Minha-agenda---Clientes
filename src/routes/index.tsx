@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import AppStack from "./app.stack";
 
-export default function RootRoutes() {
+export function RootRoutes() {
   
     return (
       <NavigationContainer>
