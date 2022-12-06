@@ -7,6 +7,7 @@ import {
 } from './styles';
 
 import { ImageSourcePropType } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 interface IGetStartedViewProps {
     image: ImageSourcePropType;
@@ -15,6 +16,8 @@ interface IGetStartedViewProps {
 }
 
 export default function GetStartedView({ image, text, page }: IGetStartedViewProps) {
+    const nav = useNavigation();
+
     return (
         <WhrapperMain>
             <TextContentTopSplash>{text}</TextContentTopSplash>
@@ -22,7 +25,9 @@ export default function GetStartedView({ image, text, page }: IGetStartedViewPro
                 source={image}
             />
             {page == 3 &&
-                <ButtonStarted>
+                <ButtonStarted
+                    onPress={() => nav.navigate("Login")}
+                >
                     <TextButtonStarted>COMEÇAR</TextButtonStarted>
                 </ButtonStarted>
             }
