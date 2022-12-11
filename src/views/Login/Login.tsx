@@ -30,8 +30,6 @@ export default function Login() {
     const [inputPassword, setInputPassword] = useState("");
     const [showPassword, setShowPassword] = useState(true);
 
-    //const link = (text: string) => <TextButtonLogin style={{ color: '#7B5BF2' }} onPress={() => nav.navigate("Cadastre-se")}>{ text }</TextButtonLogin>
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <WrapperLogin>
