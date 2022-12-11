@@ -27,7 +27,7 @@ export default function GetStartedView({ image, text }: IGetStartedViewProps) {
             {text == "Aproveite!"
                 && <ContainerButton>
                     <ButtonStarted
-                        onPress={() => nav.navigate("Login")}
+                        onPress={() => nav.navigate("Home")}
                     >
                         <TextButtonStarted>COMEÇAR</TextButtonStarted>
                     </ButtonStarted>

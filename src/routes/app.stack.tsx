@@ -5,6 +5,7 @@ import Login from "../views/Login/Login";
 import Signup from "../views/Signup/Signup";
 import RecoveryPassword from "../views/RecoveryPassword/RecoveryPassword";
 import ConfirmRegister from "../views/ConfirmRegister/ConfirmRegister";
+import Home from "../views/Home/Home";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -20,6 +21,8 @@ export default function AppStack() {
             <Screen name="Recuperar Senha" component={RecoveryPassword} />
             <Screen name="Confirmar Cadastro" component={ConfirmRegister} />
             <Screen name="Bem-Vindo" component={GetStarted} />
+            <Screen name="Home" component={Home} />
+            
         </Navigator>
     );
 }
