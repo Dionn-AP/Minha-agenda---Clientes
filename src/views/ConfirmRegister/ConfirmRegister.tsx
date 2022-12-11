@@ -17,7 +17,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 
 import {
-    MaterialCommunityIcons,
     Octicons
 } from '@expo/vector-icons';
 
@@ -35,7 +34,6 @@ export default function ConfirmRegister() {
     const confirmRegister = () => {
         setConfirm(true)
         textTop("Cadastro concluído com sucesso!")
-
     }
 
     return (

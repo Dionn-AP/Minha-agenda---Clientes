@@ -7,7 +7,7 @@ export const WrapperConfirmRegister = styled.View`
     justify-content: flex-start;
     position: relative;
     background-color: #09184D;
-    padding: 120px 25px 0 25px;
+    padding: 25% 6% 0 6%;
 `
 
 export const FormConfirmRegister = styled.View`
@@ -22,7 +22,7 @@ export const TextTopConfirmRegister = styled.Text`
     font-weight: 600;
     font-size: 20px;
     color: #EDF2FA;
-    margin-bottom: 60px;
+    margin-bottom: 20%;
     letter-spacing: 1px;
     text-align: center;
 `
@@ -34,8 +34,7 @@ export const WrapperInputsConfirmRegister = styled.View`
     width: 100%;
     height: auto;
     position: relative;
-    margin-bottom: 72px;
-    gap: 10px;
+    margin-bottom: 25%;
 `
 
 export const InputsConfirmRegister = styled.TextInput`
@@ -49,14 +48,6 @@ export const InputsConfirmRegister = styled.TextInput`
     border-radius: 1px;
     border-bottom-width: 3px;
     border-color: #EDF2FA;
-    margin-bottom: 22px;
-`
-
-export const ButtonInputs = styled.TouchableOpacity`
-    position: absolute;
-    top: 12px;
-    left: 8px;
-    opacity: 0.7;
 `
 
 export const ButtonConfirmRegister = styled.TouchableHighlight`
@@ -65,7 +56,7 @@ export const ButtonConfirmRegister = styled.TouchableHighlight`
     background-color: #7B5BF2;
     align-items: center;
     width: 100%;
-    margin-bottom: 48px;
+    margin-bottom: 12%;
 `
 
 export const TextButtonConfirmRegister = styled.Text`
@@ -94,14 +85,14 @@ export const ContainerImageSuccess = styled.View`
     align-items: center;
     justify-content: center;
     background-color: #EDF2FA;
-    height: 370px;
-    width: 370px;
+    height: 290px;
+    width: 290px;
     border-radius: 180px;
-    margin-bottom: 50px;
+    margin-bottom: 12%;
 `
 
 export const ImageConfirmSuccess = styled.Image`
     z-index: 2;
-    height: 300px;
-    width: 300px;
+    height: 220px;
+    width: 220px;
 `

@@ -4,7 +4,6 @@ import {
     TextTopLogin,
     WrapperInputs,
     InputsLogin,
-    ImagesInputs,
     ButtonLogin,
     TextButtonLogin,
     TextForgot,
@@ -69,7 +68,7 @@ export default function Login() {
                                 size={34}
                                 color="#808085" />
                         </ButtonInputs>
-                        <ButtonInputs style={{ top: 16, right: 10 }}
+                        <ButtonInputs style={{ top: "18%", right: 10 }}
                             onPress={() => setShowPassword(!showPassword)}
                         >
                             <Feather

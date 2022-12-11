@@ -4,9 +4,9 @@ import styled from 'styled-components/native';
 export const WrapperLogin = styled.View`
     flex: 1;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background-color: #09184D;
-    padding: 0 25px;
+    padding: 30% 6% 0;
 `
 
 export const FormLogin = styled.View`
@@ -21,7 +21,7 @@ export const TextTopLogin = styled.Text`
     font-weight: 600;
     font-size: 28px;
     color: #EDF2FA;
-    margin-bottom: 90px;
+    margin-bottom: 20%;
     letter-spacing: 1px;
 `
 
@@ -31,7 +31,7 @@ export const InputsLogin = styled.TextInput`
     background-color: #EDF2FA;
     padding: 17px 11px 17px 48px;
     border-radius: 8px;
-    margin-bottom: 29px;
+    margin-bottom: 8%;
 `
 
 export const ButtonLogin = styled.TouchableHighlight`
@@ -40,7 +40,7 @@ export const ButtonLogin = styled.TouchableHighlight`
     background-color: #7B5BF2;
     align-items: center;
     width: 100%;
-    margin-bottom: 28px;
+    margin-bottom: 7.5%;
 `
 
 export const WrapperInputs = styled.View`
@@ -52,13 +52,8 @@ export const WrapperInputs = styled.View`
 
 export const ButtonInputs = styled.TouchableOpacity`
     position: absolute;
-    top: 12px;
+    top: 14%;
     opacity: 0.7;
-`
-
-export const ImagesInputs = styled.Image`
-    height: 30px;
-    width: 30px;
 `
 
 export const TextButtonLogin = styled.Text`
@@ -71,7 +66,7 @@ export const TextForgot = styled.Text`
     font-weight: 600;
     font-size: 14px;
     color: #EDF2FA;
-    margin-bottom: 53px;
+    margin-bottom: 14%;
 `
 
 export const WrapperTextBottomLogin = styled.View`

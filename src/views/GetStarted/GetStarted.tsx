@@ -1,10 +1,10 @@
 import {
     WhrapperMain,
-    TextButtonStarted,
-    ImageSplashOne,
     ButtonTabView,
     FooterTabView,
-    ButtonStarted
+    TextButtonStarted,
+    ButtonStarted,
+    ContainerButton
 } from './GetStarted_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,29 +15,38 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import GetStartedView from '../../components/GetStartedView';
 
 const FirstRoute = () => (
-
-    <GetStartedView
-        image={require("../../assets/splash-01.png")}
-        text="Seja bem vindo! Aqui você poderá encontrar serviços dos mais variados para atender as suas necessidades"
-        page={1}
-    />
-
+    <WhrapperMain>
+        <GetStartedView
+            image={require("../../assets/splash-01.png")}
+            text="Seja bem vindo! Aqui você poderá encontrar serviços dos mais variados para atender as suas necessidades"
+        />
+    </WhrapperMain>
 );
 
 const SecondRoute = () => (
-    <GetStartedView
-        image={require("../../assets/splash-02.png")}
-        text="Busque por um tipo de serviço e agende o seu horário de atendimento"
-        page={2}
-    />
+    <WhrapperMain>
+        <GetStartedView
+            image={require("../../assets/splash-02.png")}
+            text="Busque por um tipo de serviço e agende o seu horário de atendimento"
+        />
+    </WhrapperMain>
 );
 
 const ThirdRoute = () => (
-    <GetStartedView
-        image={require("../../assets/splash-03.png")}
-        text="Aproveite!"
-        page={3}
-    />
+    
+    <WhrapperMain>
+        <GetStartedView
+            image={require("../../assets/splash-03.png")}
+            text="Aproveite!"
+        />
+        {/* <ContainerButton>
+            <ButtonStarted
+                onPress={() => nav.navigate("Login")}
+            >
+                <TextButtonStarted>COMEÇAR</TextButtonStarted>
+            </ButtonStarted>
+        </ContainerButton> */}
+    </WhrapperMain>
 );
 
 export default function GetStarted() {
@@ -68,6 +77,7 @@ export default function GetStarted() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            
             <TabView
                 renderTabBar={renderIndicators}
                 navigationState={{ index, routes }}

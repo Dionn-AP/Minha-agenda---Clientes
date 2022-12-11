@@ -35,7 +35,7 @@ export const InputsSignup = styled.TextInput`
 
 export const ButtonInputs = styled.TouchableOpacity`
     position: absolute;
-    top: 12px;
+    top: 14%;
     opacity: 0.7;
 `
 

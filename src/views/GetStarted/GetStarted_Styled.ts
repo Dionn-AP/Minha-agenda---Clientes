@@ -3,26 +3,13 @@ import styled from 'styled-components/native';
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get('window');
 
+
 export const WhrapperMain = styled.View`
     flex: 1; 
     align-items: center; 
-    justify-content: space-between;
-    padding: 10px 0;
+    justify-content: flex-start;
     background-color: #09184D;
-`
-export const TextButtonStarted = styled.Text`
-    text-align: center;
-    color: #EDF2FA;
-    line-height: 28px;
-    letter-spacing: 0.2px;
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 70px;
-`
-
-export const ImageSplashOne = styled.Image`
-    height: 300px;
-    width: 360px;
+    padding: 0 10px;
 `
 
 export const FooterTabView = styled.View`
@@ -41,9 +28,23 @@ export const ButtonTabView = styled.TouchableOpacity`
     background-color: #7B5BF2;
 `
 
+export const TextButtonStarted = styled.Text`
+    color: #EDF2FA;
+    font-size: 16px;
+    font-weight: 600;
+`
+
 export const ButtonStarted = styled.TouchableOpacity`
-    padding: 17px 73px;
-    border-radius: 8px; 
-    margin-top: 50px;
+    align-items: center;
+    padding: 17px 0;
+    border-radius: 8px;
     background-color: #7B5BF2;
+`
+
+export const ContainerButton = styled.View`
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding: 0 14%;
+    margin-bottom: 25%;
 `

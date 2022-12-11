@@ -1,12 +1,12 @@
 import 'styled-components/native';
 import styled from 'styled-components/native';
 
-export const WhrapperMain = styled.View`
+export const WhrapperView = styled.View`
     flex: 1; 
     align-items: center; 
     justify-content: flex-start;
     background-color: #09184D;
-    padding: 0 10px;
+    width: 100%;
 `
 export const TextContentTopSplash = styled.Text`
     text-align: center;
@@ -15,8 +15,8 @@ export const TextContentTopSplash = styled.Text`
     letter-spacing: 0.2px;
     font-size: 20px;
     font-weight: 600;
-    margin-top: 70px;
-    margin-bottom: 120px;
+    margin-top: 15%;
+    margin-bottom: 25%;
 `
 
 export const ImageSplashOne = styled.Image`
@@ -31,9 +31,16 @@ export const TextButtonStarted = styled.Text`
 `
 
 export const ButtonStarted = styled.TouchableOpacity`
-    text-align: center;
-    padding: 17px 95px;
-    border-radius: 8px; 
-    margin-top: 150px;
+    align-items: center;
+    padding: 17px 0;
+    border-radius: 8px;
     background-color: #7B5BF2;
+`
+
+export const ContainerButton = styled.View`
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding: 0 14%;
+    margin-top: 15%;
 `
