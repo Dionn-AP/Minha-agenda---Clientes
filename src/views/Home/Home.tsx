@@ -34,7 +34,7 @@ export default function Home() {
             <WrapperTop>
                 <TextNameUser>Olá, Dionnatan</TextNameUser>
                 <ButtonOpacity
-                    onPress={() => nav.navigate("Login")}
+                    onPress={() => nav.navigate("Minha Conta")}
                 >
                     <IconUser
                         style={styles.iconUser}
