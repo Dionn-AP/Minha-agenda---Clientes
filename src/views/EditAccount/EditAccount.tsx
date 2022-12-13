@@ -3,7 +3,6 @@ import {
     WrapperMain,
     TextTop,
     ContainerInfoOptions,
-    TextContainerInfoOptions,
     ButtonGoback,
     TextContainerInfoNameEmail,
     TextContainerInfoPhone,
@@ -69,9 +68,6 @@ export default function EditAccount() {
     let borderColorInputPassword = "none"
 
     const comparePassword = () => {
-        if (!valueShowPassword || (valuePassword === valueShowPassword)) {
-            
-        }
         if (valuePassword === valueShowPassword) {
             setShowPassword(false)
             setOpenModalPassword(false)
