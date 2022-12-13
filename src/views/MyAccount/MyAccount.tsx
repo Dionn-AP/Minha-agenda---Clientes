@@ -53,9 +53,12 @@ export default function MyAccount() {
                 </ContainerInfoOptions>
                 <ContainerInfoOptions>
                     <IconEditUser
+                        onPress={() => nav.navigate("Editar Minha Conta")}
                         style={styles.iconsInfo}
                     />
-                    <TextContainerInfoOptions>
+                    <TextContainerInfoOptions
+                        onPress={() => nav.navigate("Editar Minha Conta")}
+                    >
                         Editar meus dados
                     </TextContainerInfoOptions>
                 </ContainerInfoOptions>
