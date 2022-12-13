@@ -16,7 +16,7 @@ import {
     MaterialCommunityIcons,
     Feather,
     MaterialIcons
-} from '@expo/vector-icons'
+} from '@expo/vector-icons';
 
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
