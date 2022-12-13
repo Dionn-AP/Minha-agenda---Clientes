@@ -8,7 +8,8 @@ import ConfirmRegister from "../views/ConfirmRegister/ConfirmRegister";
 import Home from "../views/Home/Home";
 import MyAccount from "../views/MyAccount/MyAccount";
 import AboutApp from "../views/AboutApp/AboutApp";
-import MyInfo from "../views/EditAccount/MyInfo";
+import MyInfo from "../views/MyInfo/MyInfo";
+import EditAccount from "../views/EditAccount/EditAccount";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export default function AppStack() {
             <Screen name="Minha Conta" component={MyAccount} />
             <Screen name="Sobre" component={AboutApp} />
             <Screen name="Minhas Info" component={MyInfo} />
+            <Screen name="Editar Minha Conta" component={EditAccount} />
         </Navigator>
     );
 }

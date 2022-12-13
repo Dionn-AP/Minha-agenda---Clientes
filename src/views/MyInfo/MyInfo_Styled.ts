@@ -51,9 +51,10 @@ export const ContainerInfoOptions = styled.View`
 
 export const TextContainerInfoOptions = styled.Text`
     text-align: left;
+    width: 84%;
     color: #09184D;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     padding-right: 4px;
 `
 

@@ -35,7 +35,7 @@ export default function MyInfo() {
                         size={34}
                         color="#EDF2FA" />
                 </ButtonGoback>
-                <TextTop>Minha Conta</TextTop>
+                <TextTop>Minhas informações</TextTop>
             </WrapperTop>
             <WrapperMain>
                 <ContainerInfoOptions>
@@ -64,12 +64,9 @@ export default function MyInfo() {
                 </ContainerInfoOptions>
                 <ContainerInfoOptions>
                     <IconAddress
-                        onPress={() => nav.navigate("Sobre")}
                         style={styles.iconsInfo}
                     />
-                    <TextContainerInfoOptions
-                        onPress={() => nav.navigate("Sobre")}
-                    >
+                    <TextContainerInfoOptions>
                         Rua 05, bairro Santo Onofre, 
                         São Luís - MA, próximo ao shopping
                     </TextContainerInfoOptions>
