@@ -89,6 +89,7 @@ export default function Home() {
                             <CardsButtons>
                                 <IconConfigure
                                     style={styles.iconConfigure}
+                                    onPress={() => nav.navigate("Serviços")}
                                 />
                             </CardsButtons>
                             <TextCardsButtons>SERVIÇOS</TextCardsButtons>
