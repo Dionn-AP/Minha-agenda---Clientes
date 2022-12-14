@@ -80,6 +80,7 @@ export default function Home() {
                             <CardsButtons>
                                 <IconHistoric
                                     style={styles.iconHistoric}
+                                    onPress={() => nav.navigate("Historico")}
                                 />
                             </CardsButtons>
                             <TextCardsButtons>HISTÓRICO</TextCardsButtons>
