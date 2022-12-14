@@ -11,6 +11,7 @@ import AboutApp from "../views/AboutApp/AboutApp";
 import MyInfo from "../views/MyInfo/MyInfo";
 import EditAccount from "../views/EditAccount/EditAccount";
 import Favorites from "../views/Favorites/Favorites";
+import Scheduling from "../views/Scheduling/Scheduling";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function AppStack() {
             <Screen name="Minhas Info" component={MyInfo} />
             <Screen name="Editar Minha Conta" component={EditAccount} />
             <Screen name="Favoritos" component={Favorites} />
+            <Screen name="Meus Agendamentos" component={Scheduling} />
         </Navigator>
     );
 }

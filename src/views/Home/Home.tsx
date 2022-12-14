@@ -60,6 +60,7 @@ export default function Home() {
                             <CardsButtons>
                                 <IconSchedule
                                     style={styles.iconSchedule}
+                                    onPress={() => nav.navigate("Meus Agendamentos")}
                                 />
                             </CardsButtons>
                             <TextCardsButtons>MEUS AGENDAMENTOS</TextCardsButtons>
