@@ -13,6 +13,7 @@ import EditAccount from "../views/EditAccount/EditAccount";
 import Favorites from "../views/Favorites/Favorites";
 import Scheduling from "../views/Scheduling/Scheduling";
 import Historic from "../views/Historic/Historic";
+import Services from "../views/Services/Services";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ export default function AppStack() {
             <Screen name="Favoritos" component={Favorites} />
             <Screen name="Meus Agendamentos" component={Scheduling} />
             <Screen name="Historico" component={Historic} />
+            <Screen name="Serviços" component={Services} />
         </Navigator>
     );
 }
