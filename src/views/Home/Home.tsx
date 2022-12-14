@@ -17,6 +17,12 @@ import styles from './Home_Styled';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
+import { 
+    Keyboard, 
+    TouchableWithoutFeedback, 
+    KeyboardAvoidingView, 
+    Platform 
+} from 'react-native';
 
 import IconSearch from '../../assets/icon-search.svg';
 import IconUser from '../../assets/icon-user.svg';
@@ -30,7 +36,7 @@ export default function Home() {
     const [inputSearch, setInputSearch] = useState("");
 
     return (
-        <SafeAreaView style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "#09184D" }}>
+        <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D" }}>
             <WrapperTop>
                 <TextNameUser>Olá, Dionnatan</TextNameUser>
                 <ButtonOpacity
