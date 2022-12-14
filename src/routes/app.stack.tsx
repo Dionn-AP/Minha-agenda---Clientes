@@ -10,6 +10,7 @@ import MyAccount from "../views/MyAccount/MyAccount";
 import AboutApp from "../views/AboutApp/AboutApp";
 import MyInfo from "../views/MyInfo/MyInfo";
 import EditAccount from "../views/EditAccount/EditAccount";
+import Favorites from "../views/Favorites/Favorites";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function AppStack() {
             <Screen name="Sobre" component={AboutApp} />
             <Screen name="Minhas Info" component={MyInfo} />
             <Screen name="Editar Minha Conta" component={EditAccount} />
+            <Screen name="Favoritos" component={Favorites} />
         </Navigator>
     );
 }

@@ -40,7 +40,6 @@ export default function Home() {
                         style={styles.iconUser}
                     />
                 </ButtonOpacity>
-
             </WrapperTop>
             <WrapperMain>
                 <WrapperInputs>
@@ -69,6 +68,7 @@ export default function Home() {
                             <CardsButtons>
                                 <IconFavorites
                                     style={styles.iconFavorites}
+                                    onPress={() => nav.navigate("Favoritos")}
                                 />
                             </CardsButtons>
                             <TextCardsButtons>FAVORITOS</TextCardsButtons>
