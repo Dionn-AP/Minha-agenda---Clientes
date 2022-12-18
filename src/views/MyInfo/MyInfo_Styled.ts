@@ -8,7 +8,7 @@ export const WrapperTop = styled.View`
     align-items: flex-end;
     flex-direction: row;
     justify-content: space-between;
-    height: 10%;
+    height: 82px;
     width: 100%;
     padding: 0 5%;
     background-color: #09184D;
