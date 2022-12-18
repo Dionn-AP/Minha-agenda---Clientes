@@ -25,7 +25,7 @@ export default function MyInfo() {
     const nav = useNavigation();
 
     return (
-        <SafeAreaView style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "#09184D" }}>
+        <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D" }}>
             <WrapperTop>
                 <ButtonGoback
                     onPress={() => nav.goBack()}
