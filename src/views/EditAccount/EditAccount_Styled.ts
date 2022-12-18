@@ -8,7 +8,7 @@ export const WrapperTop = styled.View`
     align-items: flex-end;
     flex-direction: row;
     justify-content: space-between;
-    height: 10%;
+    height: 82px;
     width: 100%;
     padding: 0 5%;
     background-color: #09184D;
@@ -21,15 +21,16 @@ export const ButtonGoback = styled.TouchableOpacity`
 `
 
 export const WrapperMain = styled.View`
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 90%;
+    height: 100%;
     width: 100%;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     background-color: #EDF2FA;
-    padding: 10% 6% 0 6%;
+    padding: 10px 6% 0 6%;
 `
 
 export const TextTop = styled.Text`
@@ -106,24 +107,14 @@ export const TextButtonSave = styled.Text`
     font-size: 16px;
 `
 
-export const ContainerModal = styled.View`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: rgba(237, 242, 250, 0.5);
-    padding: 3%;
-`
-
 export const ContainerFormModal = styled.View`
+    flex: 1;
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: #09184D;
-    height: 72%;
-    width: 100%;
-    border-radius: 16px;
-    padding: 5% 5% 20% 5%;
+    padding: 35px 5% 10% 5%;
 `
 
 export const FormModal = styled.View`
@@ -133,21 +124,21 @@ export const FormModal = styled.View`
     justify-content: space-between;
     height: 100%;
     width: 100%;
-    border: 1px solid white;
 `
 
 export const InputModal = styled.TextInput`
     width: 100%;
-    padding: 3% 8px;
+    padding: 12px 8px;
     border-radius: 8px;
+    color: #808085;
     background-color: #EDF2FA;
 `
 
 export const TextTopModal = styled.Text`
     color: #EDF2FA;
     font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 6%;
+    font-size: 18px;
+    margin-bottom: 10%;
 `
 
 export const ContainerInputsModal = styled.View`
@@ -205,13 +196,13 @@ const styles = StyleSheet.create({
     },
     buttonSave: {
         backgroundColor: "#7B5BF2",
-        paddingVertical: 16,
-        paddingHorizontal: 80,
+        alignItems: "center",
+        paddingVertical: 15,
+        paddingHorizontal: 70,
         borderRadius: 8
     },
     buttonClose: {
-        position: "absolute",
-        bottom: "7%",
+        marginTop: "10%",
         height: 15,
         width: 15
     },
@@ -240,6 +231,28 @@ const styles = StyleSheet.create({
         borderColor: "#F40000",
         borderWidth: 2,
         borderStartColor: "solid"
+    },
+    scrollInput: {
+        paddingTop: 30,
+        alignItems: "center"
+    },
+    formModal: {
+        height: "80%",
+        width: "100%",
+        marginBottom: "8%"
+    },
+    scrollFormModal: {
+        height: 420,
+        width: "100%",
+        alignItems: "center"
+    },
+    input: {
+        position: "relative",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        width: "100%",
+        marginBottom: 40
     }
 });
 
