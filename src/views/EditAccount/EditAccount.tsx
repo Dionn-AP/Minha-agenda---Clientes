@@ -16,6 +16,8 @@ import {
     InputModal,
     ContainerInputsModal,
     ModalShowPassword,
+    ModalLoadData,
+    LoadCircular,
     ContainerFormShowPassword,
     FormModalPassword
 } from './EditAccount_Styled';
@@ -30,14 +32,17 @@ import {
     TouchableWithoutFeedback,
     KeyboardAvoidingView,
     Platform,
-    ScrollView
+    ScrollView,
+    Animated,
+    Easing
 } from 'react-native';
 
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     Octicons,
-    Feather
+    Feather,
+    AntDesign
 } from '@expo/vector-icons';
 
 import IconMyAccount from '../../assets/icon-my-account.svg';
@@ -46,22 +51,71 @@ import IconPhoneAccount from '../../assets/icon-phone-account.svg';
 import IconAddress from '../../assets/icon-address-account.svg';
 import IconPasswordInfo from '../../assets/icon-password-info.svg';
 import IconCloseModal from '../../assets/icon-close.svg';
-
+import LoadSuccess from '../../assets/icon-load-successfull.svg';
+import CircularProgress from '../../assets/icon-progress-circular.svg';
+import { useAuth } from '../../context/Auth';
+import { getHeaders } from '../../utils/services';
+import api from '../../services/api';
+import { ISignup } from '../../types';
 
 export default function EditAccount() {
     const nav = useNavigation();
+    const { authData } = useAuth();
+    const [user, setUser] = useState<ISignup>();
+    const [load, setLoad] = useState(true);
+
     const [showPassword, setShowPassword] = useState(true);
     const [openModal, setOpenModal] = useState(false);
+    const [modalLoadData, setModalLoadData] = useState(false);
+    const [loadProgress, setLoadProgress] = useState(false);
     const [openModalPassword, setOpenModalPassword] = useState(false);
-    const [valuePassword, setValuePassword] = useState("12345678");
+
+    const [valuePassword, setValuePassword] = useState("********");
     const [valueShowPassword, setValueShowPassword] = useState("");
+    const [valueFormEmail, setValueFormEmail] = useState("");
     const [valueFormRoad, setValueFormRoad] = useState("");
+    const [valueFormPhone, setValueFormPhone] = useState("");
     const [valueFormDistrict, setValueFormDistrict] = useState("");
     const [valueFormComplement, setValueFormComplement] = useState("");
     const [valueFormPost, setValueFormPost] = useState("");
     const [valueFormNumber, setValueFormNumber] = useState("");
     const [valueFormCity, setValueFormCity] = useState("");
     const [valueFormState, setValueFormState] = useState("");
+
+    const [valueForm, setValueForm] = useState({
+        name: "",
+        email: "",
+        road: "",
+        phone: "",
+        district: "",
+        complement: "",
+        post: "",
+        number: "",
+        city: "",
+        state: ""
+    })
+
+    async function getUser() {
+        try {
+            const response = await api.get('/user', getHeaders(authData?.token));
+            setLoad(false);
+            setValueForm({
+                name: response.data.name,
+                email: response.data.email,
+                road: response.data.road,
+                phone: response.data.phone,
+                district: response.data.district,
+                complement: response.data.complement,
+                post: response.data.post,
+                number: response.data.number_address,
+                city: response.data.city,
+                state: response.data.state
+            });
+            setUser(response.data);
+        } catch (error) {
+            return error;
+        }
+    }
 
     const comparePassword = () => {
         if (valuePassword === valueShowPassword) {
@@ -71,22 +125,75 @@ export default function EditAccount() {
         }
     }
 
-    const hadleSubmitForm = () => {
-        const data = {
-            road: valueFormRoad,
-            district: valueFormDistrict,
-            complement: valueFormComplement,
-            post: valueFormComplement,
-            number: valueFormNumber,
-            city: valueFormCity,
-            state: valueFormState
-        };
-        setOpenModal(false);
-        console.log(data);
+    async function hadleSubmitForm() {
+        setModalLoadData(true);
+        try {
+            const response = await api.patch(`/user`, {
+                name: user?.name,
+                email: user?.email,
+                phone: valueFormPhone ? valueFormPhone : user?.phone,
+                road: valueFormRoad ? valueFormRoad : user?.road,
+                district: valueFormDistrict ? valueFormDistrict : user?.district,
+                complement: valueFormComplement ? valueFormComplement : user?.complement,
+                post: valueFormPost ? valueFormPost : user?.post,
+                number_address: valueFormNumber ? valueFormNumber : user?.number_address,
+                city: valueFormCity ? valueFormCity : user?.city,
+                state: valueFormState ? valueFormState : user?.state
+            }, getHeaders(authData?.token));
+            setLoadProgress(true);
+            setUser(response.data);
+            setTimeout(() => {
+                setModalLoadData(false);
+                setLoadProgress(false);
+            }, 1500);
+        } catch (error) {
+            console.log('signup erro:', error)
+            return error;
+        }
     }
+
+    const rotationValue = new Animated.Value(0);
+
+    const spin = () => {
+        rotationValue.setValue(0)
+        Animated.timing(rotationValue, {
+            toValue: 1,
+            duration: 1500,
+            easing: Easing.linear,
+            useNativeDriver: false
+        }).start(() => spin());
+    }
+    useEffect(() => {
+        spin();
+        return (
+            spin()
+        )
+    });
+
+    const rotate = rotationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg'],
+    });
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D", position: "relative" }}>
+            <Modal
+                animationType='fade'
+                transparent={true}
+                visible={modalLoadData}
+            >
+                <ModalLoadData>
+                    {!loadProgress ?
+                        <Animated.View style={{ height: "auto", width: "auto", transform: [{ rotate }] }}>
+                            <AntDesign name="loading1" size={70} color="#7B5BF2" />
+                        </Animated.View>
+                        : <LoadSuccess style={styles.loadSucess}/>}
+                </ModalLoadData>
+            </Modal>
             <Modal
                 animationType='fade'
                 transparent={true}
@@ -113,37 +220,37 @@ export default function EditAccount() {
                                     style={styles.colorInputModal}
                                     onChangeText={setValueFormRoad}
                                     value={valueFormRoad}
-                                    placeholder="Rua 05"
-                                    placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                    placeholder={valueForm.road ? valueForm.road : "Rua"}
+                                    placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                 />
                                 <InputModal
                                     style={styles.colorInputModal}
                                     onChangeText={setValueFormDistrict}
                                     value={valueFormDistrict}
-                                    placeholder="Santo Onofre"
-                                    placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                    placeholder={valueForm.district ? valueForm.district : "Bairro"}
+                                    placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                 />
                                 <InputModal
                                     style={styles.colorInputModal}
                                     onChangeText={setValueFormComplement}
                                     value={valueFormComplement}
-                                    placeholder="Próximo ao shopping"
-                                    placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                    placeholder={valueForm.complement ? valueForm.complement : "Complemento"}
+                                    placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                 />
                                 <ContainerInputsModal>
                                     <InputModal
                                         style={styles.inputCepNumber}
                                         onChangeText={setValueFormPost}
                                         value={valueFormPost}
-                                        placeholder="65110-000"
-                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                        placeholder={valueForm.post ? valueForm.post : "CEP"}
+                                        placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                     ></InputModal>
                                     <InputModal
                                         style={styles.inputCepNumber}
                                         onChangeText={setValueFormNumber}
                                         value={valueFormNumber}
-                                        placeholder="300"
-                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                        placeholder={valueForm.number ? valueForm.number : "Número"}
+                                        placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                     ></InputModal>
                                 </ContainerInputsModal>
                                 <ContainerInputsModal>
@@ -151,15 +258,15 @@ export default function EditAccount() {
                                         style={styles.inputCity}
                                         onChangeText={setValueFormCity}
                                         value={valueFormCity}
-                                        placeholder="São Luís"
-                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                        placeholder={valueForm.city ? valueForm.city : "Cidade"}
+                                        placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                     />
                                     <InputModal
                                         style={styles.inputState}
                                         onChangeText={setValueFormState}
                                         value={valueFormState}
-                                        placeholder="MA"
-                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                        placeholder={valueForm.state ? valueForm.state : "UF"}
+                                        placeholderTextColor="rgba(128, 128, 133, 0.7)"
                                     />
                                 </ContainerInputsModal>
                             </FormModal>
@@ -167,9 +274,9 @@ export default function EditAccount() {
                     </KeyboardAvoidingView>
                     <ButtonOpacity
                         activeOpacity={0.7}
-                        onPress={() => hadleSubmitForm()}
+                        onPress={() => setOpenModal(!openModal)}
                         style={styles.buttonSave}>
-                        <TextButtonSave>SALVAR</TextButtonSave>
+                        <TextButtonSave>CONFIRMAR</TextButtonSave>
                     </ButtonOpacity>
                 </ContainerFormModal>
 
@@ -219,7 +326,7 @@ export default function EditAccount() {
                             style={styles.iconsInfo}
                         />
                         <TextContainerInfoNameEmail>
-                            Dionnatan Alves Pereira
+                            {!load && valueForm?.name}
                         </TextContainerInfoNameEmail>
                     </ContainerInfoOptions>
                     <ContainerInfoOptions>
@@ -227,16 +334,19 @@ export default function EditAccount() {
                             style={styles.iconsInfo}
                         />
                         <TextContainerInfoNameEmail>
-                            dionnatan@email.com
+                            {!load && valueForm?.email}
                         </TextContainerInfoNameEmail>
                     </ContainerInfoOptions>
                     <ContainerInfoOptions>
                         <IconPhoneAccount
                             style={styles.iconsInfo}
                         />
-                        <TextContainerInfoPhone>
-                            (98) 99999-9999
-                        </TextContainerInfoPhone>
+                        <TextContainerInfoPhone
+                            onChangeText={setValueFormPhone}
+                            value={valueFormPhone}
+                            placeholder={valueForm.phone ? valueForm.phone : ""}
+                            placeholderTextColor="rgba(128, 128, 133, 1)"
+                        />
                     </ContainerInfoOptions>
                     <ContainerInfoOptions>
                         <IconAddress
@@ -247,8 +357,7 @@ export default function EditAccount() {
                             activeOpacity={0.6}
                         >
                             <TextContainerInfoAddress>
-                                Rua 05, bairro Santo Onofre,
-                                São Luís - MA, próximo ao shopping
+                                {!load && `${valueFormRoad ? valueFormRoad : valueForm?.road}, ${valueFormDistrict ? valueFormDistrict : valueForm?.district}, ${valueFormCity ? valueFormCity : valueForm?.city}, ${valueFormComplement ? valueFormComplement : valueForm?.complement}`}
                             </TextContainerInfoAddress>
                         </ButtonInput>
                     </ContainerInfoOptions>
@@ -280,6 +389,7 @@ export default function EditAccount() {
                     </KeyboardAvoidingView>
                     <ButtonOpacity
                         activeOpacity={0.7}
+                        onPress={() => hadleSubmitForm()}
                         style={styles.buttonSave}>
                         <TextButtonSave>SALVAR</TextButtonSave>
                     </ButtonOpacity>
