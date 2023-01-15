@@ -1,11 +1,21 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { View, Text } from "react-native";
+import { useAuth } from "../context/Auth";
 import AppStack from "./app.stack";
+import AuthStack from "./auth.stack";
 
 export function RootRoutes() {
-  
+  const { authData, loading } = useAuth();
+  if(loading) {
     return (
-      <NavigationContainer>
-        <AppStack />
-      </NavigationContainer>
-    );
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#09184D"}}>
+        <Text style={{color: "#EDF2FA"}}>Aguarde...</Text>
+      </View>
+    )
   }
+  return (
+    <NavigationContainer>
+      {authData ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
+  );
+}

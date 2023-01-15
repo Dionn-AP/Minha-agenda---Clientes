@@ -11,6 +11,7 @@ import styles from './MyInfo_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
+import api from '../../services/api';
 
 import {
     Octicons
@@ -20,9 +21,30 @@ import IconMyAccount from '../../assets/icon-my-account.svg';
 import IconEmailAccount from '../../assets/icon-email-account.svg';
 import IconPhoneAccount from '../../assets/icon-phone-account.svg';
 import IconAddress from '../../assets/icon-address-account.svg';
+import { getHeaders } from '../../utils/services';
+import { useAuth } from '../../context/Auth';
+import { useEffect, useState } from 'react';
+import { ISignup } from '../../types';
 
 export default function MyInfo() {
     const nav = useNavigation();
+    const { authData } = useAuth();
+    const [user, setUser] = useState<ISignup>();
+    const [load, setLoad] = useState(true);
+
+    async function getUser() {
+        try {
+            const response = await api.get('/user', getHeaders(authData?.token));
+            setLoad(false);
+            setUser(response.data);
+        } catch (error) {
+            return error
+        }
+    }
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D" }}>
@@ -43,7 +65,7 @@ export default function MyInfo() {
                         style={styles.iconsInfo}
                     />
                     <TextContainerInfoOptions>
-                        Dionnatan Alves Pereira
+                        {!load && user?.name}
                     </TextContainerInfoOptions>
                 </ContainerInfoOptions>
                 <ContainerInfoOptions>
@@ -51,7 +73,7 @@ export default function MyInfo() {
                         style={styles.iconsInfo}
                     />
                     <TextContainerInfoOptions>
-                        dionnatan@email.com
+                        {!load && user?.email}
                     </TextContainerInfoOptions>
                 </ContainerInfoOptions>
                 <ContainerInfoOptions>
@@ -59,7 +81,7 @@ export default function MyInfo() {
                         style={styles.iconsInfo}
                     />
                     <TextContainerInfoOptions>
-                        (98) 99999-9999
+                        {!load && user?.phone}
                     </TextContainerInfoOptions>
                 </ContainerInfoOptions>
                 <ContainerInfoOptions>
@@ -67,8 +89,7 @@ export default function MyInfo() {
                         style={styles.iconsInfo}
                     />
                     <TextContainerInfoOptions>
-                        Rua 05, bairro Santo Onofre, 
-                        São Luís - MA, próximo ao shopping
+                        {!load && `${user?.road}, ${user?.district}, ${user?.city} - ${user?.state}, ${user?.complement}, ${user?.post}`}
                     </TextContainerInfoOptions>
                 </ContainerInfoOptions>
             </WrapperMain>

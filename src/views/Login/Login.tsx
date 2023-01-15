@@ -21,11 +21,12 @@ import {
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from '../../context/Auth';
 
 
 export default function Login() {
     const nav = useNavigation();
-
+    const { signIn } = useAuth();
     const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     const [showPassword, setShowPassword] = useState(true);
@@ -77,7 +78,7 @@ export default function Login() {
                     </WrapperInputs>
 
                     <ButtonLogin
-                        onPress={() => nav.navigate("Bem-Vindo")}
+                        onPress={() => signIn(inputEmail, inputPassword)}
                         activeOpacity={0.7}
                     >
                         <TextButtonLogin>ENTRAR</TextButtonLogin>

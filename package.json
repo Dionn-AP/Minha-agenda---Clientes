@@ -9,10 +9,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.0",
+    "@ant-design/react-native": "^5.0.3",
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-navigation/bottom-tabs": "^6.4.3",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.4",
     "@types/styled-components-react-native": "^5.2.0",
+    "antd": "^5.1.4",
+    "axios": "^1.2.2",
     "expo": "~47.0.8",
     "expo-linking": "~3.2.3",
     "expo-status-bar": "~1.4.2",
