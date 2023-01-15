@@ -148,6 +148,20 @@ export const ContainerInputsModal = styled.View`
     width: 100%;
 `
 
+export const ModalLoadData = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: rgba(237, 242, 250, 0.5);
+    padding: 7%;
+`
+
+export const LoadCircular = styled.View`
+    height: auto;
+    width: auto;
+`
+
 export const ModalShowPassword = styled.View`
     flex: 1;
     align-items: center;
@@ -253,6 +267,10 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         width: "100%",
         marginBottom: 40
+    },
+    loadSucess: {
+        height: 32,
+        width: 32,
     }
 });
 
