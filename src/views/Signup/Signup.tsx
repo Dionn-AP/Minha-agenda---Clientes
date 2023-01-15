@@ -13,15 +13,16 @@ import {
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
+import { ISignup } from '../../types';
+import api from '../../services/api';
 import { useState } from 'react';
 
 import {
     MaterialCommunityIcons,
-    EvilIcons,
     MaterialIcons,
     Feather,
     FontAwesome5
-} from '@expo/vector-icons'
+} from '@expo/vector-icons';
 
 export default function Signup() {
     const nav = useNavigation();
@@ -31,6 +32,23 @@ export default function Signup() {
     const [inputPassword, setInputPassword] = useState("");
     const [inputConfirmPassword, setInputConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(true);
+
+    async function signUp(name: string, email: string, password: string) {
+        try {
+            const response = await api.post('/user', {
+                name,
+                email,
+                password
+            });
+            if(response) {
+                nav.navigate("Login");
+            }
+
+        } catch (error) {
+            console.log(error)
+            return;
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -116,7 +134,7 @@ export default function Signup() {
                         </ButtonInputs>
                     </WrapperInputs>
                     <ButtonSignup
-                    onPress={() => nav.navigate("Confirmar Cadastro")}
+                        onPress={() => signUp(inputName, inputEmail, inputPassword)}
                     >
                         <TextButtonSignup>CADASTRAR</TextButtonSignup>
                     </ButtonSignup>
