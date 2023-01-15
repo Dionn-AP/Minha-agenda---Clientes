@@ -11,6 +11,7 @@ import styles from './MyAccount_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from '../../context/Auth';
 
 import {
     Octicons
@@ -25,6 +26,7 @@ import IconLogout from '../../assets/icon-logout.svg';
 
 export default function MyAccount() {
     const nav = useNavigation();
+    const { signOut } = useAuth();
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "#09184D" }}>
@@ -83,11 +85,11 @@ export default function MyAccount() {
                 </ContainerInfoOptions>
                 <ContainerInfoOptions>
                     <IconLogout
-                        onPress={() => nav.navigate("Login")}
+                        onPress={signOut}
                         style={styles.iconsInfo}
                     />
                     <TextContainerInfoOptions
-                        onPress={() => nav.navigate("Login")}
+                        onPress={signOut}
                     >
                         Sair
                     </TextContainerInfoOptions>
