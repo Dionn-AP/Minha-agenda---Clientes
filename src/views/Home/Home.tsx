@@ -30,15 +30,17 @@ import IconSchedule from '../../assets/icon-schedule.svg';
 import IconFavorites from '../../assets/icon-favorites.svg';
 import IconConfigure from '../../assets/icon-configure.svg';
 import IconHistoric from '../../assets/icon-historic.svg';
+import { useAuth } from '../../context/Auth';
 
 export default function Home() {
     const nav = useNavigation();
+    const { authData } = useAuth();
     const [inputSearch, setInputSearch] = useState("");
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D" }}>
             <WrapperTop>
-                <TextNameUser>Olá, Dionnatan</TextNameUser>
+                <TextNameUser>{`Olá, ${authData?.name?.split(" ")[0]}`}</TextNameUser>
                 <ButtonOpacity
                     onPress={() => nav.navigate("Minha Conta")}
                 >
