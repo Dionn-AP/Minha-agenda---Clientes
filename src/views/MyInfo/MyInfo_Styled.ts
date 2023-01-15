@@ -50,6 +50,8 @@ export const ContainerInfoOptions = styled.View`
 `
 
 export const TextContainerInfoOptions = styled.Text`
+    display: flex;
+    flex-direction: row;
     text-align: left;
     width: 84%;
     color: #09184D;
