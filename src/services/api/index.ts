@@ -3,12 +3,12 @@ import axios from "axios";
 interface IAxios {
     baseURL: string;
     timeout: number;
-    headers: object;
+    headers: unknown;
 }
 
-const api = axios.create(<IAxios>{
+const api = axios.create({
     baseURL: "https://server-my-schedule.onrender.com",
-    timeout: 100000,
+    timeout: 10000,
     headers: { 'Content-Type': 'application/json' }
 });
 

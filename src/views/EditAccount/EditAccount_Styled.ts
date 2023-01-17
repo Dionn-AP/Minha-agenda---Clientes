@@ -50,12 +50,13 @@ export const ContainerInfoOptions = styled.View`
     margin-bottom: 12%;
 `
 
-export const TextContainerInfoOptions = styled.Text`
+export const TextChangePassword = styled.Text`
     text-align: left;
     color: #09184D;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     width: 84%;
+    padding-left: 10px;
 `
 
 export const TextContainerInfoNameEmail = styled.Text`
@@ -127,11 +128,13 @@ export const FormModal = styled.View`
 `
 
 export const InputModal = styled.TextInput`
+    position: relative;
     width: 100%;
     padding: 12px 8px;
     border-radius: 8px;
     color: #808085;
     background-color: #EDF2FA;
+    margin-bottom: 35px;
 `
 
 export const TextTopModal = styled.Text`
@@ -175,12 +178,12 @@ export const ContainerFormShowPassword = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background-color: #09184D;
-    height: 30%;
+    height: auto;
     width: 100%;
     border-radius: 16px;
-    padding: 7%;
+    padding: 20px 20px 24px;
 `
 
 export const FormModalPassword = styled.View`
@@ -188,12 +191,29 @@ export const FormModalPassword = styled.View`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 75%;
+    height: auto;
     width: 100%;
+`
+
+export const LoadSuccessChangePassword = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 270px;
+    width: 100%;
+    border-radius: 16px;
 `
 
 export const ButtonOpacity = styled.TouchableOpacity`
     
+`
+
+export const Error = styled.Text`
+    color: #F40000;
+    font-weight: 400;
+    font-size: 14px;
+    position: absolute;
+    top: 40%;
 `
 
 

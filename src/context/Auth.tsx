@@ -22,7 +22,7 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
     const [authData, setAuthData] = useState<ISignin>();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     async function loadFromStorage() {
         try {
@@ -30,6 +30,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
             if (auth) {
                 const _auth: ISignin = JSON.parse(auth);
                 setAuthData(_auth);
+                setLoading(false);
             }
         } catch (error) {
         } finally {
@@ -39,15 +40,22 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
     async function signIn(email: string, password: string) {
         try {
+            setLoading(true);
             const auth = await api.post('/login', {
                 email,
                 password
             });
+            setLoading(false);
             setAuthData(auth.data);
             AsyncStorage.setItem('@AuthData', JSON.stringify(auth.data));
             return auth.data;
-        } catch (error) {
-            Alert.alert('Tente novamente')
+        } catch (error: any) {
+            console.log(error.response.status)
+            setLoading(false)
+            if (error.response.status <= 422) {
+                return Alert.alert('Algo deu errado', error.response.data.message);
+            }
+            return Alert.alert('Algo deu errado', 'Erro de conexão com o servidor');
         }
     }
 

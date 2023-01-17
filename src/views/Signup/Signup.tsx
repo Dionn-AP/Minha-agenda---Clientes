@@ -23,6 +23,7 @@ import {
     Feather,
     FontAwesome5
 } from '@expo/vector-icons';
+import { Alert } from 'react-native';
 
 export default function Signup() {
     const nav = useNavigation();
@@ -34,19 +35,28 @@ export default function Signup() {
     const [showPassword, setShowPassword] = useState(true);
 
     async function signUp(name: string, email: string, password: string) {
+        if(!inputConfirmPassword) {
+            return Alert.alert('Algo deu errado', 'Você precisa confirmar a senha');
+        }
+
+        if(inputPassword !== inputConfirmPassword) {
+            return Alert.alert('Algo deu errado', 'As senhas precisam ser iguais');
+        }
         try {
             const response = await api.post('/user', {
                 name,
                 email,
                 password
             });
-            if(response) {
+            if (response) {
                 nav.navigate("Login");
             }
 
-        } catch (error) {
-            console.log(error)
-            return;
+        } catch (error: any) {
+            // if (error.response.status <= 422) {
+            //     return Alert.alert('Algo deu errado', error.response.data.message);
+            // }
+            return Alert.alert('Algo deu errado', error.response.data.message);
         }
     }
 
