@@ -7,6 +7,7 @@ import {
     TextContainerInfoNameEmail,
     TextContainerInfoPhone,
     TextContainerInfoAddress,
+    TextChangePassword,
     ButtonInput,
     ButtonOpacity,
     TextButtonSave,
@@ -17,11 +18,13 @@ import {
     ContainerInputsModal,
     ModalShowPassword,
     ModalLoadData,
-    LoadCircular,
+    LoadSuccessChangePassword,
     ContainerFormShowPassword,
-    FormModalPassword
+    FormModalPassword,
+    Error
 } from './EditAccount_Styled';
 
+import { ThemeProvider } from 'styled-components';
 import styles from './EditAccount_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -34,7 +37,8 @@ import {
     Platform,
     ScrollView,
     Animated,
-    Easing
+    Easing,
+    Alert
 } from 'react-native';
 
 import React, { useEffect, useState } from 'react';
@@ -52,11 +56,10 @@ import IconAddress from '../../assets/icon-address-account.svg';
 import IconPasswordInfo from '../../assets/icon-password-info.svg';
 import IconCloseModal from '../../assets/icon-close.svg';
 import LoadSuccess from '../../assets/icon-load-successfull.svg';
-import CircularProgress from '../../assets/icon-progress-circular.svg';
 import { useAuth } from '../../context/Auth';
 import { getHeaders } from '../../utils/services';
 import api from '../../services/api';
-import { ISignup } from '../../types';
+import { ISignup, themes } from '../../types';
 
 export default function EditAccount() {
     const nav = useNavigation();
@@ -70,9 +73,12 @@ export default function EditAccount() {
     const [loadProgress, setLoadProgress] = useState(false);
     const [openModalPassword, setOpenModalPassword] = useState(false);
 
-    const [valuePassword, setValuePassword] = useState("********");
+    const [valueNewPassword, setValueNewPassword] = useState("");
+    const [valueConfirmNewPassword, setConfirmValueNewPassword] = useState("");
     const [valueShowPassword, setValueShowPassword] = useState("");
-    const [valueFormEmail, setValueFormEmail] = useState("");
+    const [discoverPasswordModal, setDiscoverPasswordModal] = useState(true);
+    const [loadAwaitChangePassword, setLoadAwaitChangePassword] = useState(false);
+    const [loadSuccessChangePassword, setLoadSuccessChangePassword] = useState(false);
     const [valueFormRoad, setValueFormRoad] = useState("");
     const [valueFormPhone, setValueFormPhone] = useState("");
     const [valueFormDistrict, setValueFormDistrict] = useState("");
@@ -81,7 +87,10 @@ export default function EditAccount() {
     const [valueFormNumber, setValueFormNumber] = useState("");
     const [valueFormCity, setValueFormCity] = useState("");
     const [valueFormState, setValueFormState] = useState("");
+    const [error, setError] = useState("");
 
+    let borderColorError = "";
+    let bWidthError = "";
     const [valueForm, setValueForm] = useState({
         name: "",
         email: "",
@@ -98,7 +107,6 @@ export default function EditAccount() {
     async function getUser() {
         try {
             const response = await api.get('/user', getHeaders(authData?.token));
-            setLoad(false);
             setValueForm({
                 name: response.data.name,
                 email: response.data.email,
@@ -112,16 +120,46 @@ export default function EditAccount() {
                 state: response.data.state
             });
             setUser(response.data);
+            setLoad(false);
         } catch (error) {
             return error;
         }
     }
 
-    const comparePassword = () => {
-        if (valuePassword === valueShowPassword) {
-            setShowPassword(false)
-            setOpenModalPassword(false)
-            return
+    async function discoverPassword() {
+        try {
+            const response = await api.post('/user/discover-password', {
+                password: valueShowPassword
+            }, getHeaders(authData?.token));
+            if (response.data) {
+                setDiscoverPasswordModal(false);
+            }
+        } catch (error: any) {
+            return Alert.alert('Algo deu errado', error.response.data.message);
+        }
+    }
+
+    async function changePassword() {
+        if (!valueNewPassword || !valueConfirmNewPassword) {
+            return Alert.alert('Algo deu errado', "Você precisar informar uma senha");
+        }
+        if (valueNewPassword !== valueConfirmNewPassword) {
+            return Alert.alert('Algo deu errado', "As senhas precisam ser iguais");
+        }
+        try {
+            setLoadAwaitChangePassword(true);
+            const response = await api.patch('/user/change-password', {
+                password: valueNewPassword,
+                confirm_password: valueConfirmNewPassword
+            }, getHeaders(authData?.token));
+            setLoadSuccessChangePassword(true);
+            setTimeout(() => {
+                setLoadSuccessChangePassword(false);
+                setLoadAwaitChangePassword(false);
+                setOpenModalPassword(false);
+            }, 1500);
+        } catch (error: any) {
+            return Alert.alert('Algo deu errado', error.response.data.message);
         }
     }
 
@@ -147,15 +185,25 @@ export default function EditAccount() {
                 setLoadProgress(false);
             }, 1500);
         } catch (error) {
-            console.log('signup erro:', error)
             return error;
         }
+    }
+
+    const setClosedModals = () => {
+        setOpenModalPassword(false);
+        setDiscoverPasswordModal(true);
+        setLoadAwaitChangePassword(false);
+        setLoadSuccessChangePassword(false);
+        setValueShowPassword("");
+        setValueNewPassword("");
+        setConfirmValueNewPassword("");
+        setError("");
     }
 
     const rotationValue = new Animated.Value(0);
 
     const spin = () => {
-        rotationValue.setValue(0)
+        rotationValue.setValue(0);
         Animated.timing(rotationValue, {
             toValue: 1,
             duration: 1500,
@@ -191,7 +239,7 @@ export default function EditAccount() {
                         <Animated.View style={{ height: "auto", width: "auto", transform: [{ rotate }] }}>
                             <AntDesign name="loading1" size={70} color="#7B5BF2" />
                         </Animated.View>
-                        : <LoadSuccess style={styles.loadSucess}/>}
+                        : <LoadSuccess style={styles.loadSucess} />}
                 </ModalLoadData>
             </Modal>
             <Modal
@@ -279,7 +327,6 @@ export default function EditAccount() {
                         <TextButtonSave>CONFIRMAR</TextButtonSave>
                     </ButtonOpacity>
                 </ContainerFormModal>
-
             </Modal>
             <Modal
                 animationType='fade'
@@ -287,25 +334,66 @@ export default function EditAccount() {
                 visible={openModalPassword}
             >
                 <ModalShowPassword>
-                    <ContainerFormShowPassword>
-                        <TextTopModal>Informe a sua senha atual</TextTopModal>
-                        <FormModalPassword>
-                            <InputModal
-                                value={showPassword === true ? valueShowPassword : ""}
-                                onChangeText={setValueShowPassword}
-                                secureTextEntry={false}
-                            />
-                            <ButtonOpacity
-                                onPress={() => comparePassword()}
-                                style={styles.buttonSave}>
-                                <TextButtonSave>VER</TextButtonSave>
-                            </ButtonOpacity>
-                        </FormModalPassword>
-                    </ContainerFormShowPassword>
-                    <IconCloseModal
-                        onPress={() => setOpenModalPassword(!openModalPassword)}
-                        style={styles.buttonCloseModalPassword}
-                    />
+                    {discoverPasswordModal ?
+                        <ContainerFormShowPassword>
+                            <TextTopModal>Informe a sua senha atual</TextTopModal>
+                            <FormModalPassword>
+                                <InputModal
+                                    value={valueShowPassword}
+                                    onChangeText={setValueShowPassword}
+                                    secureTextEntry={true}
+                                />
+                                <Error>{error}</Error>
+                                <ButtonOpacity
+                                    onPress={() => discoverPassword()}
+                                    style={styles.buttonSave}>
+                                    <TextButtonSave>PRÓXIMO</TextButtonSave>
+                                </ButtonOpacity>
+                            </FormModalPassword>
+                        </ContainerFormShowPassword>
+                        :
+                        <ContainerFormShowPassword>
+                            {!loadAwaitChangePassword ?
+                                <FormModalPassword>
+                                    <TextTopModal>Informe uma nova senha</TextTopModal>
+                                    <InputModal
+                                        value={valueNewPassword}
+                                        onChangeText={setValueNewPassword}
+                                        placeholder="Nova senha"
+                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                        secureTextEntry={true}
+                                    />
+                                    <InputModal
+                                        value={valueConfirmNewPassword}
+                                        onChangeText={setConfirmValueNewPassword}
+                                        placeholder="Confirmar nova senha "
+                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                        secureTextEntry={true}
+                                    />
+                                    <ButtonOpacity
+                                        onPress={() => changePassword()}
+                                        style={styles.buttonSave}>
+                                        <TextButtonSave>CONFIRMAR</TextButtonSave>
+                                    </ButtonOpacity>
+                                </FormModalPassword>
+                                :
+                                <LoadSuccessChangePassword>
+                                    {!loadSuccessChangePassword ?
+                                        <Animated.View style={{ height: "auto", width: "auto", transform: [{ rotate }] }}>
+                                            <AntDesign name="loading1" size={70} color="#7B5BF2" />
+                                        </Animated.View>
+                                        : <LoadSuccess style={styles.loadSucess} />
+                                    }
+                                </LoadSuccessChangePassword>
+                            }
+                        </ContainerFormShowPassword>
+                    }
+                    {!loadAwaitChangePassword &&
+                        <IconCloseModal
+                            onPress={() => setClosedModals()}
+                            style={styles.buttonCloseModalPassword}
+                        />
+                    }
                 </ModalShowPassword>
             </Modal>
             <WrapperTop>
@@ -357,36 +445,20 @@ export default function EditAccount() {
                             activeOpacity={0.6}
                         >
                             <TextContainerInfoAddress>
-                                {!load && `${valueFormRoad ? valueFormRoad : valueForm?.road}, ${valueFormDistrict ? valueFormDistrict : valueForm?.district}, ${valueFormCity ? valueFormCity : valueForm?.city}, ${valueFormComplement ? valueFormComplement : valueForm?.complement}`}
+                                {!load && `${valueForm.road?valueForm.road+", ":""}${valueForm.district?valueForm.district+", ":""}${valueForm.city?valueForm.city+" - ":""}${valueForm.state?valueForm.state+", ":""}${valueForm.complement?valueForm.complement+", ":""}${valueForm.post?valueForm.post:""}`}
                             </TextContainerInfoAddress>
                         </ButtonInput>
                     </ContainerInfoOptions>
-                    <KeyboardAvoidingView
-                        style={styles.input}
-                        behavior={Platform.OS === "ios" ? "padding" : "height"}
-                        keyboardVerticalOffset={90}
-                    >
+
+                    <ContainerInfoOptions>
                         <IconPasswordInfo
                             style={styles.iconsInfo}
                         />
-
-                        <TextContainerInfoPhone
-                            value={valuePassword}
-                            onChangeText={setValuePassword}
-                            secureTextEntry={showPassword}
-                        >
-                        </TextContainerInfoPhone>
-
-                        <ButtonOpacity
-                            style={styles.eyeIcon}
-                        >
-                            <Feather
-                                onPress={() => showPassword ? setOpenModalPassword(!openModalPassword) : setShowPassword(!showPassword)}
-                                name={showPassword ? "eye-off" : "eye"}
-                                size={26}
-                                color="#808085" />
-                        </ButtonOpacity>
-                    </KeyboardAvoidingView>
+                        <TextChangePassword
+                            onPress={() => setOpenModalPassword(true)}>
+                            Redefinir minha senha
+                        </TextChangePassword>
+                    </ContainerInfoOptions>
                     <ButtonOpacity
                         activeOpacity={0.7}
                         onPress={() => hadleSubmitForm()}
@@ -395,6 +467,6 @@ export default function EditAccount() {
                     </ButtonOpacity>
                 </ScrollView>
             </WrapperMain>
-        </SafeAreaView >
+        </SafeAreaView>
     )
 };

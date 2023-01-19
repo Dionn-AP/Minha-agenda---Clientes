@@ -19,3 +19,21 @@ export interface ISignin {
     password: string;
     token: string;
 }
+
+export interface ITheme {
+    background_primary: string;
+    background_second: string;
+    text_primary: string;
+    text_second: string;
+    text_color: string;
+    color_error: string;
+}
+
+export const themes = {
+    background_primary: "#09184D",
+    background_second: "#EDF2FA",
+    text_primary: "#2F2E2E",
+    text_second: "#808085",
+    text_color: "#7B5BF2",
+    color_error: "#F40000"
+}

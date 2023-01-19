@@ -26,17 +26,36 @@ import { useAuth } from '../../context/Auth';
 import { useEffect, useState } from 'react';
 import { ISignup } from '../../types';
 
+
 export default function MyInfo() {
     const nav = useNavigation();
     const { authData } = useAuth();
     const [user, setUser] = useState<ISignup>();
     const [load, setLoad] = useState(true);
+    const [address, setAddress] = useState({
+        road: "",
+        district: "",
+        complement: "",
+        post: "",
+        city: "",
+        state: ""
+    });
+
+    let arrayAddress = "";
 
     async function getUser() {
         try {
             const response = await api.get('/user', getHeaders(authData?.token));
             setLoad(false);
             setUser(response.data);
+            setAddress({
+                road: response.data.road ? response.data.road + ", ": "",
+                district: response.data.district ? response.data.district + ', ' : "",
+                complement: response.data.complement ? response.data.complement + ', ' : "",
+                post: response.data.post ? response.data.post : "",
+                city: response.data.city ? response.data.city + ' - ' : "",
+                state: response.data.state ? response.data.state + ", ": ""
+            });
         } catch (error) {
             return error
         }
@@ -89,7 +108,8 @@ export default function MyInfo() {
                         style={styles.iconsInfo}
                     />
                     <TextContainerInfoOptions>
-                        {!load && `${user?.road}, ${user?.district}, ${user?.city} - ${user?.state}, ${user?.complement}, ${user?.post}`}
+                        {!load && `${address?.road}${address?.district}${address?.city}${address?.state}${address?.complement}${address?.post}`}
+                        {/* {!load && arrayAddress} */}
                     </TextContainerInfoOptions>
                 </ContainerInfoOptions>
             </WrapperMain>

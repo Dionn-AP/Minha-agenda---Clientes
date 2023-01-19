@@ -6,16 +6,26 @@ import AuthStack from "./auth.stack";
 
 export function RootRoutes() {
   const { authData, loading } = useAuth();
-  if(loading) {
+  if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#09184D"}}>
-        <Text style={{color: "#EDF2FA"}}>Aguarde...</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: "#09184D",
+        }}>
+        <Text 
+        style={{ 
+          color: "#EDF2FA",
+          fontSize: 20
+          }}>Aguarde...</Text>
       </View>
     )
-  }
-  return (
-    <NavigationContainer>
-      {authData ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
-  );
+  } else
+    return (
+      <NavigationContainer>
+        {authData ? <AppStack /> : <AuthStack />}
+      </NavigationContainer>
+    );
 }

@@ -13,28 +13,52 @@ import {
 } from './Login_Styled';
 
 import {
+    useFonts,
+    Inter_400Regular,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold
+} from '@expo-google-fonts/inter';
+
+import {
     MaterialCommunityIcons,
     Feather,
     MaterialIcons
 } from '@expo/vector-icons';
 
 import { useState } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from '../../context/Auth';
+import Loading from '../../components/Loading/Loading';
 
 
 export default function Login() {
     const nav = useNavigation();
     const { signIn } = useAuth();
+
+    const [fontsLoaded] = useFonts({
+        Inter_400Regular,
+        Inter_600SemiBold,
+        Inter_700Bold,
+        Inter_800ExtraBold
+    });
+
     const [inputEmail, setInputEmail] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     const [showPassword, setShowPassword] = useState(true);
 
+    if (!fontsLoaded) {
+        return (
+            <Loading />
+        );
+    }
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
             <WrapperLogin>
-                <TextTopLogin>LOGIN</TextTopLogin>
+                <TextTopLogin style={{fontFamily: 'Inter_700Bold'}}>LOGIN</TextTopLogin>
                 <FormLogin>
                     <WrapperInputs>
                         <InputsLogin
@@ -81,25 +105,28 @@ export default function Login() {
                         onPress={() => signIn(inputEmail, inputPassword)}
                         activeOpacity={0.7}
                     >
-                        <TextButtonLogin>ENTRAR</TextButtonLogin>
+                        <TextButtonLogin style={{fontFamily: 'Inter_600SemiBold'}}>ENTRAR</TextButtonLogin>
                     </ButtonLogin>
                 </FormLogin>
                 <TextForgot
                     onPress={() => nav.navigate("Recuperar Senha")}
+                    style={{fontFamily: 'Inter_600SemiBold'}}
                 >
                     Esqueci minha senha
                 </TextForgot>
                 <WrapperTextBottomLogin>
-                    <TexBottomLogin style={{ marginRight: 4 }}>
+                    <TexBottomLogin style={{ fontFamily: 'Inter_600SemiBold', marginRight: 4 }}>
                         Novo por aqui,
                     </TexBottomLogin>
-                    <TexBottomLogin style={{ color: "#7B5BF2" }}
+                    <TexBottomLogin style={{ fontFamily: 'Inter_600SemiBold', color: "#7B5BF2" }}
                         onPress={() => nav.navigate("Signup")}
                     >
                         cadastre-se!
                     </TexBottomLogin>
                 </WrapperTextBottomLogin>
+                
             </WrapperLogin>
+            <StatusBar barStyle="light-content" backgroundColor="#09184D" translucent />
         </SafeAreaView>
     )
 };
