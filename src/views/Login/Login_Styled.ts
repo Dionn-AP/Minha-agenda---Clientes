@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 
-
 export const WrapperLogin = styled.View`
     flex: 1;
     align-items: center;
@@ -66,7 +65,7 @@ export const TextForgot = styled.Text`
     font-weight: 600;
     font-size: 14px;
     color: #EDF2FA;
-    margin-bottom: 14%;
+    margin-bottom: 12%;
 `
 
 export const WrapperTextBottomLogin = styled.View`
