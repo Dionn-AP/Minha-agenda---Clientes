@@ -15,7 +15,7 @@ export default function AuthStack() {
         >
             <Screen name="Login" component={Login} />
             <Screen name="Signup" component={Signup} />
-            <Screen name="Confirmar Cadastro" component={ConfirmRegister} />
+            <Screen name="confirmar_adastro" component={ConfirmRegister} />
             <Screen name="Recuperar Senha" component={RecoveryPassword} />
         </Navigator>
     );
