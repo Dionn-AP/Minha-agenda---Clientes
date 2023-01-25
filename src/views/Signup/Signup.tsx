@@ -171,7 +171,7 @@ export default function Signup() {
                         >
                             {
                                 awaitLoading
-                                    ? <LoadingIn />
+                                    ? <LoadingIn color="#EDF2FA" size={40}/>
                                     : <TextButtonSignup style={{ fontFamily: 'Inter_600SemiBold' }}>CADASTRAR</TextButtonSignup>
                             }
                         </ButtonSignup>
