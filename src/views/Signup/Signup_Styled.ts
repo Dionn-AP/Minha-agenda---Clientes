@@ -4,8 +4,7 @@ export const WrapperSignup = styled.View`
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #09184D;
-    padding: 0 20px;
+    padding: 20% 20px 0;
 `
 
 export const TextTopSignup = styled.Text`
@@ -21,7 +20,7 @@ export const FormSignup = styled.View`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    min-width: 100%;
 `
 
 export const InputsSignup = styled.TextInput`
@@ -40,7 +39,10 @@ export const ButtonInputs = styled.TouchableOpacity`
 `
 
 export const ButtonSignup = styled.TouchableHighlight`
-    padding: 17px 0;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
     border-radius: 8px;
     background-color: #7B5BF2;
     align-items: center;
@@ -63,6 +65,8 @@ export const WrapperInputs = styled.View`
 
 export const WrapperTextBottomLogin = styled.View`
     display: flex;
+    align-content: center;
+    justify-content: center;
     flex-direction: row;
 `
 
