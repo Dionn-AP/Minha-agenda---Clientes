@@ -1,9 +1,14 @@
 import { ActivityIndicator, View, StyleSheet } from "react-native";
 
-export default function LoadingIn() {
+interface LoadingInProps {
+  color: string;
+  size: number;
+}
+
+export default function LoadingIn({color, size}: LoadingInProps) {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size={40} color="#EDF2FA" />
+      <ActivityIndicator size={size} color={color} />
     </View>
   )
 }
