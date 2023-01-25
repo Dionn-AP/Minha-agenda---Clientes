@@ -60,6 +60,7 @@ import { useAuth } from '../../context/Auth';
 import { getHeaders } from '../../utils/services';
 import api from '../../services/api';
 import { ISignup, themes } from '../../types';
+import LoadingIn from '../../components/LoadingIn/LoadingIn';
 
 export default function EditAccount() {
     const nav = useNavigation();
@@ -67,7 +68,6 @@ export default function EditAccount() {
     const [user, setUser] = useState<ISignup>();
     const [load, setLoad] = useState(true);
 
-    const [showPassword, setShowPassword] = useState(true);
     const [openModal, setOpenModal] = useState(false);
     const [modalLoadData, setModalLoadData] = useState(false);
     const [loadProgress, setLoadProgress] = useState(false);
@@ -89,8 +89,6 @@ export default function EditAccount() {
     const [valueFormState, setValueFormState] = useState("");
     const [error, setError] = useState("");
 
-    let borderColorError = "";
-    let bWidthError = "";
     const [valueForm, setValueForm] = useState({
         name: "",
         email: "",
@@ -200,28 +198,6 @@ export default function EditAccount() {
         setError("");
     }
 
-    const rotationValue = new Animated.Value(0);
-
-    const spin = () => {
-        rotationValue.setValue(0);
-        Animated.timing(rotationValue, {
-            toValue: 1,
-            duration: 1500,
-            easing: Easing.linear,
-            useNativeDriver: false
-        }).start(() => spin());
-    }
-    useEffect(() => {
-        spin();
-        return (
-            spin()
-        )
-    });
-
-    const rotate = rotationValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg'],
-    });
 
     useEffect(() => {
         getUser();
@@ -235,11 +211,11 @@ export default function EditAccount() {
                 visible={modalLoadData}
             >
                 <ModalLoadData>
-                    {!loadProgress ?
-                        <Animated.View style={{ height: "auto", width: "auto", transform: [{ rotate }] }}>
-                            <AntDesign name="loading1" size={70} color="#7B5BF2" />
-                        </Animated.View>
-                        : <LoadSuccess style={styles.loadSucess} />}
+                    {
+                        !loadProgress
+                            ? <LoadingIn color="#7B5BF2" size={80} />
+                            : <LoadSuccess style={styles.loadSucess} />
+                    }
                 </ModalLoadData>
             </Modal>
             <Modal
@@ -353,42 +329,43 @@ export default function EditAccount() {
                         </ContainerFormShowPassword>
                         :
                         <ContainerFormShowPassword>
-                            {!loadAwaitChangePassword ?
-                                <FormModalPassword>
-                                    <TextTopModal>Informe uma nova senha</TextTopModal>
-                                    <InputModal
-                                        value={valueNewPassword}
-                                        onChangeText={setValueNewPassword}
-                                        placeholder="Nova senha"
-                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
-                                        secureTextEntry={true}
-                                    />
-                                    <InputModal
-                                        value={valueConfirmNewPassword}
-                                        onChangeText={setConfirmValueNewPassword}
-                                        placeholder="Confirmar nova senha "
-                                        placeholderTextColor="rgba(128, 128, 133, 0.5)"
-                                        secureTextEntry={true}
-                                    />
-                                    <ButtonOpacity
-                                        onPress={() => changePassword()}
-                                        style={styles.buttonSave}>
-                                        <TextButtonSave>CONFIRMAR</TextButtonSave>
-                                    </ButtonOpacity>
-                                </FormModalPassword>
-                                :
-                                <LoadSuccessChangePassword>
-                                    {!loadSuccessChangePassword ?
-                                        <Animated.View style={{ height: "auto", width: "auto", transform: [{ rotate }] }}>
-                                            <AntDesign name="loading1" size={70} color="#7B5BF2" />
-                                        </Animated.View>
-                                        : <LoadSuccess style={styles.loadSucess} />
-                                    }
-                                </LoadSuccessChangePassword>
+                            {
+                                !loadAwaitChangePassword ?
+                                    <FormModalPassword>
+                                        <TextTopModal>Informe uma nova senha</TextTopModal>
+                                        <InputModal
+                                            value={valueNewPassword}
+                                            onChangeText={setValueNewPassword}
+                                            placeholder="Nova senha"
+                                            placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                            secureTextEntry={true}
+                                        />
+                                        <InputModal
+                                            value={valueConfirmNewPassword}
+                                            onChangeText={setConfirmValueNewPassword}
+                                            placeholder="Confirmar nova senha "
+                                            placeholderTextColor="rgba(128, 128, 133, 0.5)"
+                                            secureTextEntry={true}
+                                        />
+                                        <ButtonOpacity
+                                            onPress={() => changePassword()}
+                                            style={styles.buttonSave}>
+                                            <TextButtonSave>CONFIRMAR</TextButtonSave>
+                                        </ButtonOpacity>
+                                    </FormModalPassword>
+                                    :
+                                    <LoadSuccessChangePassword>
+                                        {
+                                            !loadSuccessChangePassword
+                                                ? <LoadingIn color="#7B5BF2" size={80} />
+                                                : <LoadSuccess style={styles.loadSucess} />
+                                        }
+                                    </LoadSuccessChangePassword>
                             }
                         </ContainerFormShowPassword>
                     }
-                    {!loadAwaitChangePassword &&
+                    {
+                        !loadAwaitChangePassword &&
                         <IconCloseModal
                             onPress={() => setClosedModals()}
                             style={styles.buttonCloseModalPassword}
@@ -445,11 +422,10 @@ export default function EditAccount() {
                             activeOpacity={0.6}
                         >
                             <TextContainerInfoAddress>
-                                {!load && `${valueForm.road?valueForm.road+", ":""}${valueForm.district?valueForm.district+", ":""}${valueForm.city?valueForm.city+" - ":""}${valueForm.state?valueForm.state+", ":""}${valueForm.complement?valueForm.complement+", ":""}${valueForm.post?valueForm.post:""}`}
+                                {!load && `${valueForm.road ? valueForm.road + ", " : valueFormRoad ? valueFormRoad + ", " : ""}${valueForm.district ? valueForm.district + ", " : valueFormDistrict ? valueFormDistrict + ", " : ""}${valueForm.city ? valueForm.city + " - " : valueFormCity ? valueFormCity + " - " : ""}${valueForm.state ? valueForm.state + ", " : valueFormState ? valueFormState + ", " : ""}${valueForm.complement ? valueForm.complement + ", " : valueFormComplement ? valueFormComplement + ", " : ""}${valueForm.post ? valueForm.post : valueFormPost ? valueFormPost : ""}`}
                             </TextContainerInfoAddress>
                         </ButtonInput>
                     </ContainerInfoOptions>
-
                     <ContainerInfoOptions>
                         <IconPasswordInfo
                             style={styles.iconsInfo}
