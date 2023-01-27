@@ -16,6 +16,7 @@ export const WrapperTop = styled.View`
 
 export const WrapperMain = styled.View`
     display: flex;
+    position: relative;
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
@@ -25,6 +26,16 @@ export const WrapperMain = styled.View`
     border-top-left-radius: 20px;
     background-color: #EDF2FA;
     padding: 1% 6% 0;
+`
+
+export const WrapperContent = styled.View`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
 `
 
 export const TextNameUser = styled.Text`

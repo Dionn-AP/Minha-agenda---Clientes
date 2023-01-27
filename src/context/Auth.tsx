@@ -2,8 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../services/api";
 import { Alert } from "react-native";
-import { ISignin, ISignup } from "../types";
-import { getHeaders } from "../utils/services";
+import { ISignin } from "../types";
 
 interface Props {
     children: React.ReactNode;
@@ -50,7 +49,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
             AsyncStorage.setItem('@AuthData', JSON.stringify(auth.data));
             return auth.data;
         } catch (error: any) {
-            console.log(error.response.status)
             setLoading(false)
             if (error.response.status <= 422) {
                 return Alert.alert('Algo deu errado', error.response.data.message);
