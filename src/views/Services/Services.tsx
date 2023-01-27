@@ -13,7 +13,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import { Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ICompanies } from '../../types';
 
 import {
     Octicons
@@ -21,11 +22,21 @@ import {
 
 import IconUser from '../../assets/icon-user.svg';
 import IconSearch from '../../assets/icon-search.svg';
-
+import api from '../../services/api';
+import CardCompany from '../../components/CardCompany/CardCompany';
+import { useAuth } from '../../context/Auth';
 
 export default function Services() {
+    const { authData } = useAuth();
     const nav = useNavigation();
     const [inputSearch, setInputSearch] = useState("");
+    const [companies, setCompanies] = useState<ICompanies[]>();
+
+    useEffect(() => {
+        api.get('/companies').then(response => {
+            setCompanies(response.data)
+        });
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D" }}>
@@ -68,9 +79,21 @@ export default function Services() {
 
                     />
                 </KeyboardAvoidingView>
-                <TextNotServices>
+                {/* <TextNotServices>
                     Nenhum serviço encontrado
-                </TextNotServices>
+                </TextNotServices> */}
+                {
+                    companies?.map((compay, index) => {
+                        const isFavorite = compay.id_favorite?.find(favoriteId => favoriteId.includes(authData?.id!))
+                        return (
+                            <CardCompany
+                                key={index}
+                                name={compay.name}
+                                favorite={isFavorite}
+                            />
+                        )
+                    })
+                }
             </WrapperMain>
         </SafeAreaView>
 
