@@ -6,7 +6,10 @@ import {
     TextNameUser,
     TextNotFavorites,
     WrapperMain,
-    WrapperTop
+    WrapperTop,
+    ButtonForServices,
+    TextButtonForServices,
+    WrapperEmptyContent
 } from './Favorites_Styled';
 
 import { useNavigation } from "@react-navigation/native";
@@ -22,28 +25,31 @@ import api from '../../services/api';
 import { ICompanies } from '../../types';
 import { useAuth } from '../../context/Auth';
 import CardCompany from '../../components/CardCompany/CardCompany';
+import { ActivityIndicator, Alert } from 'react-native';
 
 
 export default function Favorites() {
     const nav = useNavigation();
     const { authData } = useAuth();
+    const [loadingData, setLoadingData] = useState(true);
+    const [companies, setCompanies] = useState<ICompanies[]>();
 
-    // const [companies, setCompanies] = useState<ICompanies[]>([]);
+    async function getAllCompanies() {
+        try {
+            const response = await api.get('/companies');
+            const somethingFavorites = response.data.filter((company: any) => company.id_favorite.includes(authData?.id));
+            setCompanies(somethingFavorites);
+            setLoadingData(false);
+        } catch (error: any) {
+            setLoadingData(false);
+            return Alert.alert('Algo deu errado', 'Não foi possível carregar os dados. Por favor, recarregue o app')
+        }
 
-    // async function getCompanies() {
-    //     try {
-    //         const response = await api.get('/companies');
-    //         const dataComapanies = response.data;
-    //         const isFavorites = dataComapanies.map((company: any) => {
-    //             const favoriteExists = company.id_favorite?.filter((favoriteId: string | string[]) => favoriteId.includes(authData?.id!))
-    //             return favoriteExists
-    //         });
-    //         setCompanies(isFavorites);
-    //     } catch (error: any) {
-    //         return console.log(error.response.data)
-    //     }
-    // }
+    }
 
+    useEffect(() => {
+        getAllCompanies();
+    }, [])
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "#09184D" }}>
@@ -69,21 +75,40 @@ export default function Favorites() {
                 <TextCenterView>
                     FAVORITOS
                 </TextCenterView>
+                {
+                    loadingData ?
+                        <ActivityIndicator
+                            color='#7B5BF2'
+                            size={80}
+                        />
+                        :
+                        !companies?.length ?
+                            <WrapperEmptyContent>
+                                <TextNotFavorites>
+                                    Você ainda não favoritou nenhum serviço
+                                </TextNotFavorites>
+                                <ButtonForServices 
+                                onPress={() => nav.navigate("Serviços")}
+                                activeOpacity={0.7}
+                                >
+                                    <TextButtonForServices>IR PARA SERVIÇOS</TextButtonForServices>
+                                </ButtonForServices>
+                            </WrapperEmptyContent>
 
-                {/* {
-                    !companies ?
-                        <TextNotFavorites>
-                            Você ainda não favoritou nenhum serviço
-                        </TextNotFavorites>
-                        : companies?.map((compay, index) => {
-                            return (
-                                <CardCompany
-                                    key={index}
-                                    name={compay.name}
-                                />
-                            )
-                        })
-                } */}
+                            : companies?.map((company, index) => {
+                                const isFavorite = company.id_favorite?.find(favoriteId => favoriteId.includes(authData?.id!))
+                                return (
+                                    <CardCompany
+                                        key={index}
+                                        idCompany={company._id!}
+                                        name={company.name}
+                                        favorite={isFavorite}
+                                        getAllCompanies={getAllCompanies}
+                                    />
+                                )
+                            })
+
+                }
             </WrapperMain>
         </SafeAreaView>
     )
