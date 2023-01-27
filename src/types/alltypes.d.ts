@@ -20,6 +20,27 @@ export interface ISignin {
     token: string;
 }
 
+export interface ICompanies {
+    name: string,
+    email: string,
+    address: {
+        phone: string,
+        road: string,
+        district: string,
+        complement?: string,
+        post?: string,
+        number_address: string,
+        city: string,
+        state: string,
+    },
+    location?: {
+        lati: string,
+        long: string,
+    },
+    open_schedules: boolean,
+    id_favorite?: string[]
+}
+
 export interface ITheme {
     background_primary: string;
     background_second: string;
