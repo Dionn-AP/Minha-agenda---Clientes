@@ -21,6 +21,7 @@ export interface ISignin {
 }
 
 export interface ICompanies {
+    _id: string;
     name: string,
     email: string,
     address: {

@@ -41,8 +41,6 @@ export default function MyInfo() {
         state: ""
     });
 
-    let arrayAddress = "";
-
     async function getUser() {
         try {
             const response = await api.get('/user', getHeaders(authData?.token));

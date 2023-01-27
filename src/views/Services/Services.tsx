@@ -7,14 +7,16 @@ import {
     TextCenterView,
     TextNotServices,
     ButtonGoback,
-    InputSearch
+    InputSearch,
+    WrapperContent
 } from './Services_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
-import { Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { useEffect, useState } from 'react';
 import { ICompanies } from '../../types';
+import LoadingIn from '../../components/LoadingIn/LoadingIn';
 
 import {
     Octicons
@@ -32,10 +34,13 @@ export default function Services() {
     const [inputSearch, setInputSearch] = useState("");
     const [companies, setCompanies] = useState<ICompanies[]>();
 
+    async function getAllCompanies() {
+        const response = await api.get('/companies');
+        setCompanies(response.data)
+    }
+
     useEffect(() => {
-        api.get('/companies').then(response => {
-            setCompanies(response.data)
-        });
+        getAllCompanies();
     }, []);
 
     return (
@@ -49,7 +54,7 @@ export default function Services() {
                         size={34}
                         color="#EDF2FA" />
                 </ButtonGoback>
-                <TextNameUser>Olá, Dionnatan</TextNameUser>
+                <TextNameUser>{`Olá, ${authData?.name?.split(" ")[0]}`}</TextNameUser>
                 <ButtonOpacity
                     onPress={() => nav.navigate("Minha Conta")}
                 >
@@ -79,21 +84,33 @@ export default function Services() {
 
                     />
                 </KeyboardAvoidingView>
-                {/* <TextNotServices>
-                    Nenhum serviço encontrado
-                </TextNotServices> */}
-                {
-                    companies?.map((compay, index) => {
-                        const isFavorite = compay.id_favorite?.find(favoriteId => favoriteId.includes(authData?.id!))
-                        return (
-                            <CardCompany
-                                key={index}
-                                name={compay.name}
-                                favorite={isFavorite}
+                <WrapperContent>
+                    {
+                        companies ?
+                            companies?.map((company, index) => {
+                                const isFavorite = company.id_favorite?.find(favoriteId => favoriteId.includes(authData?.id!))
+                                return (
+                                    <CardCompany
+                                        key={index}
+                                        name={company.name}
+                                        idCompany={company._id!}
+                                        favorite={isFavorite}
+                                        getAllCompanies={getAllCompanies}
+                                    />
+                                )
+                            })
+                            :
+                            <ActivityIndicator
+                                color='#7B5BF2'
+                                size={80}
                             />
-                        )
-                    })
-                }
+
+                        // <TextNotServices>
+                        //     Nenhum serviço encontrado
+                        // </TextNotServices>
+                    }
+                </WrapperContent>
+
             </WrapperMain>
         </SafeAreaView>
 

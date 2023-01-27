@@ -70,9 +70,6 @@ export const TextButtonView = styled.Text`
 export const style = StyleSheet.create({
     imageCard: {
         height: "100%",
-        width: 'auto'
-    },
-    startEmpty: {
-        width: 'auto'
+        width: "100%"
     }
 });

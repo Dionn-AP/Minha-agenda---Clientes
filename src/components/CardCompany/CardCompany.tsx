@@ -5,11 +5,11 @@ import {
     ContentTitle,
     ContentBottom,
     ButtonView,
-    TextButtonView
+    TextButtonView,
+    style
 } from './CardCompany_Styled';
 
 import { TouchableOpacity } from 'react-native';
-import { style } from './CardCompany_Styled'
 
 import ImageCompanies from '../../assets/image-companies.svg';
 import IconStartEmpty from '../../assets/icon-start-empty.svg';
@@ -17,22 +17,27 @@ import IconStart from '../../assets/icon-start.svg';
 
 import api from '../../services/api';
 
-import { useEffect, useState } from 'react';
-import { ICompanies } from '../../types';
+import { getHeaders } from '../../utils/services';
+import { useAuth } from '../../context/Auth';
 
 interface CompanyProps {
     name: string;
+    idCompany: string;
     favorite?: string;
+    getAllCompanies: () => void
 }
 
-export default function CardCompany({ name, favorite }: CompanyProps) {
-    const [companies, setCompanies] = useState<ICompanies[]>()
-
-    useEffect(() => {
-        api.get('/companies').then(response => {
-            setCompanies(response.data)
-        });
-    }, []);
+export default function CardCompany({ name, favorite, idCompany, getAllCompanies }: CompanyProps) {
+    const { authData } = useAuth();
+    
+    async function toggleFavorite(id: string) {
+        try {
+            await api.patch(`/companies/favorites/${id}`, {}, getHeaders(authData?.token));
+            getAllCompanies();
+        } catch (error: any) {
+            return console.log(error.response.data)
+        }
+    }
 
     return (
         <CardCompanyMain>
@@ -46,15 +51,12 @@ export default function CardCompany({ name, favorite }: CompanyProps) {
                 <ContentBottom>
                     <TouchableOpacity
                         activeOpacity={0.7}
+                        onPress={() => toggleFavorite(idCompany)}
                     >
                         {
                             favorite
-                                ? <IconStart
-                                    style={style.startEmpty}
-                                />
-                                : <IconStartEmpty
-                                    style={style.startEmpty}
-                                />
+                                ? <IconStart />
+                                : <IconStartEmpty />
                         }
                     </TouchableOpacity>
                     <ButtonView
