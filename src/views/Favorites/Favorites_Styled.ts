@@ -59,6 +59,30 @@ export const ButtonGoback = styled.TouchableOpacity`
     left: 17px;
 `
 
+export const WrapperEmptyContent = styled.View`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+`
+
+export const ButtonForServices = styled.TouchableHighlight`
+    padding: 17px 28px;
+    border-radius: 8px;
+    background-color: #7B5BF2;
+    align-items: center;
+    margin-top: 20px;
+`
+
+export const TextButtonForServices = styled.Text`
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    color: #EDF2FA;
+`
+
 export const ButtonOpacity = styled.TouchableOpacity`
     
 `
