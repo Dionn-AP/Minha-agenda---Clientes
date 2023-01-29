@@ -19,17 +19,20 @@ import api from '../../services/api';
 
 import { getHeaders } from '../../utils/services';
 import { useAuth } from '../../context/Auth';
+import { useNavigation } from '@react-navigation/native';
 
 interface CompanyProps {
     name: string;
     idCompany: string;
     favorite?: string;
+    // setOpenServices: (arg0: boolean) => void;
     getAllCompanies: () => void
 }
 
 export default function CardCompany({ name, favorite, idCompany, getAllCompanies }: CompanyProps) {
     const { authData } = useAuth();
-    
+    const nav = useNavigation();
+
     async function toggleFavorite(id: string) {
         try {
             await api.patch(`/companies/favorites/${id}`, {}, getHeaders(authData?.token));
@@ -60,6 +63,7 @@ export default function CardCompany({ name, favorite, idCompany, getAllCompanies
                         }
                     </TouchableOpacity>
                     <ButtonView
+                        // onPress={() => setOpenServices(false)}
                         activeOpacity={0.7}
                     >
                         <TextButtonView>ver</TextButtonView>

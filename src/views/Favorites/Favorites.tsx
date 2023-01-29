@@ -31,6 +31,7 @@ import { ActivityIndicator, Alert } from 'react-native';
 export default function Favorites() {
     const nav = useNavigation();
     const { authData } = useAuth();
+    const [openServices, setOpenServices] = useState<boolean>(false);
     const [loadingData, setLoadingData] = useState(true);
     const [companies, setCompanies] = useState<ICompanies[]>();
 
@@ -101,8 +102,9 @@ export default function Favorites() {
                                     <CardCompany
                                         key={index}
                                         idCompany={company._id!}
-                                        name={company.name}
+                                        name={company.company}
                                         favorite={isFavorite}
+                                        // setOpenServices={setOpenServices}
                                         getAllCompanies={getAllCompanies}
                                     />
                                 )
