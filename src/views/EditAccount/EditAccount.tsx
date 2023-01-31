@@ -24,20 +24,15 @@ import {
     Error
 } from './EditAccount_Styled';
 
-import { ThemeProvider } from 'styled-components';
 import styles from './EditAccount_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import {
     Modal,
-    Keyboard,
-    TouchableWithoutFeedback,
     KeyboardAvoidingView,
     Platform,
     ScrollView,
-    Animated,
-    Easing,
     Alert
 } from 'react-native';
 
@@ -45,8 +40,6 @@ import React, { useEffect, useState } from 'react';
 
 import {
     Octicons,
-    Feather,
-    AntDesign
 } from '@expo/vector-icons';
 
 import IconMyAccount from '../../assets/icon-my-account.svg';
@@ -59,7 +52,7 @@ import LoadSuccess from '../../assets/icon-load-successfull.svg';
 import { useAuth } from '../../context/Auth';
 import { getHeaders } from '../../utils/services';
 import api from '../../services/api';
-import { ISignup, themes } from '../../types';
+import { ISignup } from '../../types';
 import LoadingIn from '../../components/LoadingIn/LoadingIn';
 
 export default function EditAccount() {
