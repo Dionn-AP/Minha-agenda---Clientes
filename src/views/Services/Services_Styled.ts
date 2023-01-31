@@ -36,6 +36,7 @@ export const WrapperContent = styled.View`
     justify-content: center;
     height: auto;
     width: 100%;
+    padding-bottom: 120px;
 `
 
 export const TextNameUser = styled.Text`
