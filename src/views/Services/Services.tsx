@@ -8,8 +8,7 @@ import {
     TextNotServices,
     ButtonGoback,
     InputSearch,
-    WrapperContent,
-    TextCenterViewService
+    WrapperContent
 } from './Services_Styled';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,6 +34,7 @@ export default function Services() {
     const nav = useNavigation();
     const [notFoundCompany, setNotFoundCompany] = useState("");
     const [inputSearch, setInputSearch] = useState("");
+    const [companyId, setCompanyId] = useState<string>("");
     const [openServices, setOpenServices] = useState<boolean>(false);
     const [companies, setCompanies] = useState<ICompanies[]>();
 
@@ -62,6 +62,11 @@ export default function Services() {
         }
     }
 
+    function ViewServies(idCompany: string) {
+        setCompanyId(idCompany);
+        setOpenServices(true);
+    }
+
     useEffect(() => {
         getAllCompanies();
     }, []);
@@ -82,6 +87,7 @@ export default function Services() {
                     openServices ?
                         <ButtonOpacity
                             onPress={() => setOpenServices(false)}
+                            style={{ marginBottom: 10 }}
                         >
                             <IconClose
                                 style={styles.iconUser}
@@ -97,17 +103,12 @@ export default function Services() {
                         </ButtonOpacity>
                 }
             </WrapperTop>
-            {/* {
+            {
                 openServices ?
-                    <WrapperMain>
-                        <TextCenterViewService>
-                            BARBEARIA MR. MAN
-                        </TextCenterViewService>
-                        <ScrollView>
-                            <ViewServiceCompany />
-                        </ScrollView>
-                    </WrapperMain>
-                    : */}
+                    <ViewServiceCompany
+                        companyId={companyId}
+                    />
+                    :
                     <WrapperMain>
                         <TextCenterView>
                             SERVIÇOS
@@ -129,36 +130,41 @@ export default function Services() {
 
                             />
                         </KeyboardAvoidingView>
-                        <WrapperContent>
-                            {
-                                notFoundCompany ?
-                                    <TextNotServices>
-                                        {notFoundCompany}
-                                    </TextNotServices>
-                                    :
-                                    !companies ?
-                                        <ActivityIndicator
-                                            color='#7B5BF2'
-                                            size={80}
-                                        />
+                        <ScrollView
+                            style={{ width: '100%' }}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <WrapperContent>
+                                {
+                                    notFoundCompany ?
+                                        <TextNotServices>
+                                            {notFoundCompany}
+                                        </TextNotServices>
                                         :
-                                        companies?.map((company, index) => {
-                                            const isFavorite = company.id_favorite?.find(favoriteId => favoriteId.includes(authData?.id!))
-                                            return (
-                                                <CardCompany
-                                                    key={index}
-                                                    name={company.company}
-                                                    idCompany={company._id!}
-                                                    favorite={isFavorite}
-                                                    // setOpenServices={setOpenServices}
-                                                    getAllCompanies={getAllCompanies}
-                                                />
-                                            )
-                                        })
-                            }
-                        </WrapperContent>
+                                        !companies ?
+                                            <ActivityIndicator
+                                                color='#7B5BF2'
+                                                size={80}
+                                            />
+                                            :
+                                            companies?.map((company, index) => {
+                                                const isFavorite = company.id_favorite?.find(favoriteId => favoriteId.includes(authData?.id!))
+                                                return (
+                                                    <CardCompany
+                                                        key={index}
+                                                        name={company.company}
+                                                        idCompany={company._id!}
+                                                        favorite={isFavorite}
+                                                        openServices={ViewServies}
+                                                        getAllCompanies={getAllCompanies}
+                                                    />
+                                                )
+                                            })
+                                }
+                            </WrapperContent>
+                        </ScrollView>
                     </WrapperMain>
-            {/* } */}
+            }
         </SafeAreaView>
 
     )

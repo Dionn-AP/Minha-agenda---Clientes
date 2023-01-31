@@ -36,6 +36,7 @@ export const WrapperContent = styled.View`
     justify-content: center;
     height: auto;
     width: 100%;
+    padding-bottom: 120px;
 `
 
 export const TextNameUser = styled.Text`
@@ -78,19 +79,6 @@ export const ButtonGoback = styled.TouchableOpacity`
     bottom: 55%;
     left: 17px;
 `
-
-export const TextCenterViewService = styled.Text`
-    text-align: center;
-    color: #09184D;
-    font-weight: 600;
-    font-size: 18px;
-    text-transform: uppercase;
-    width: 65%;
-    padding: 16px 0;
-    margin-bottom: 30px;
-`
-
-
 
 export const ButtonOpacity = styled.TouchableOpacity`
     
