@@ -23,24 +23,38 @@ export interface ISignin {
 export interface ICompanies {
     _id: string;
     company: string;
-    name_owner: string,
-    email: string,
+    name_owner: string;
+    email: string;
     address: {
-        phone: string,
-        road: string,
-        district: string,
-        complement?: string,
-        post?: string,
-        number_address: string,
-        city: string,
-        state: string,
+        phone: string;
+        road: string;
+        district: string;
+        complement?: string;
+        post?: string;
+        number_address: string;
+        city: string;
+        state: string;
     },
     location?: {
-        lati: string,
-        long: string,
+        lati: string;
+        long: string;
     },
-    open_schedules: boolean,
+    open_schedules: boolean;
     id_favorite?: string[]
+}
+
+export interface IServices {
+    _id: string;
+    company_id: string;
+    name_company: string;
+    service_types: [
+        {
+            name_service: string;
+            price: number;
+            available: boolean;
+            _id: string;
+        }
+    ]
 }
 
 export interface ITheme {
