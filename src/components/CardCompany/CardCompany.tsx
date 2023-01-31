@@ -25,13 +25,12 @@ interface CompanyProps {
     name: string;
     idCompany: string;
     favorite?: string;
-    // setOpenServices: (arg0: boolean) => void;
+    openServices: (arg0: string) => void;
     getAllCompanies: () => void
 }
 
-export default function CardCompany({ name, favorite, idCompany, getAllCompanies }: CompanyProps) {
+export default function CardCompany({ name, favorite, idCompany, getAllCompanies, openServices }: CompanyProps) {
     const { authData } = useAuth();
-    const nav = useNavigation();
 
     async function toggleFavorite(id: string) {
         try {
@@ -63,7 +62,7 @@ export default function CardCompany({ name, favorite, idCompany, getAllCompanies
                         }
                     </TouchableOpacity>
                     <ButtonView
-                        // onPress={() => setOpenServices(false)}
+                        onPress={() => openServices(idCompany)}
                         activeOpacity={0.7}
                     >
                         <TextButtonView>ver</TextButtonView>
