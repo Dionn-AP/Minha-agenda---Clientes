@@ -38,6 +38,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
 
     async function signIn(email: string, password: string) {
+        //if(!email)
         try {
             setLoading(true);
             const auth = await api.post('/login', {
@@ -50,9 +51,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
             return auth.data;
         } catch (error: any) {
             setLoading(false)
-            if (error.response.status <= 422) {
+            if(error.response.status < 423) {
                 return Alert.alert('Algo deu errado', error.response.data.message);
             }
+            console.log(error.response.status)
             return Alert.alert('Algo deu errado', 'Erro de conexão com o servidor');
         }
     }
