@@ -12,7 +12,7 @@ export const WrapperMain = styled.View`
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     background-color: #EDF2FA;
-    padding: 1% 6% 110px;
+    padding: 1% 0 110px;
 `
 
 export const TextCenterViewService = styled.Text`
@@ -27,6 +27,7 @@ export const TextCenterViewService = styled.Text`
 
 export const ContentInfoService = styled.View`
     display: flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -35,7 +36,7 @@ export const ContentInfoService = styled.View`
     width: 100%;
     border-radius: 3px;
     margin-bottom: 40px;
-    border-bottom-width: 1px;
+    border-bottom-width: 0.5px;
     border-bottom-color: rgba(9, 24, 77, 0.3);
 `
 
@@ -75,18 +76,65 @@ export const ButtonSchedule = styled.View`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2px 10px;
+    padding: 1.5px 10px;
     border-radius: 18px;
     background-color: #7B5BF2;
+    border: 1.5px solid #EDF2FA;
 `
 
 export const TextSchedule = styled.Text`
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     color: #EDF2FA;
     margin-bottom: 3px;
 `
 
+export const ButtonScheduleDisable = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2px 10px;
+    border-radius: 18px;
+    border: 1px solid #7B5BF2;
+    background-color: #EDF2FA;
+`
+
+export const TextScheduleDisable = styled.Text`
+    font-size: 12px;
+    font-weight: 400;
+    color: #7B5BF2;
+    margin-bottom: 3px;
+`
+
+export const ContainerSchedulesCount = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 97%;
+    right: 3%;
+    height: 20px;
+    width: 20px;
+    z-index: 2;
+`
+
+export const TextSchedulesCount = styled.Text`
+    position: absolute;
+    bottom: -4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #EDF2FA;
+    z-index: 3;
+`
+
 export const TextEmpty = styled.Text`
 
 `
+
+
+export const styles = StyleSheet.create({
+    iconSchedule: {
+        height: 20,
+        width: 20
+    }
+});

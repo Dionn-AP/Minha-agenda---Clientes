@@ -14,16 +14,15 @@ import {
 } from './Home_Styled';
 import styles from './Home_Styled';
 
+import { ButtonGoback } from '../Services/Services_Styled';
+
+import { Octicons } from '@expo/vector-icons';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
-import { 
-    Keyboard, 
-    TouchableWithoutFeedback, 
-    KeyboardAvoidingView, 
-    Platform 
-} from 'react-native';
 
+import IconClose from '../../assets/icon-close.svg';
 import IconSearch from '../../assets/icon-search.svg';
 import IconUser from '../../assets/icon-user.svg';
 import IconSchedule from '../../assets/icon-schedule.svg';
@@ -31,11 +30,20 @@ import IconFavorites from '../../assets/icon-favorites.svg';
 import IconConfigure from '../../assets/icon-configure.svg';
 import IconHistoric from '../../assets/icon-historic.svg';
 import { useAuth } from '../../context/Auth';
+import ServiceComponent from '../../components/Services/ServiceComponent';
 
 export default function Home() {
     const nav = useNavigation();
     const { authData } = useAuth();
+    const [openSearchServices, setOpenSearchServices] = useState(false);
+    const [openServices, setOpenServices] = useState<boolean>(false);
     const [inputSearch, setInputSearch] = useState("");
+
+    function inputSearchAndClear() {
+        setOpenSearchServices(false);
+        setInputSearch("");
+        setOpenServices(false);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "flex-start", backgroundColor: "#09184D" }}>
@@ -50,18 +58,6 @@ export default function Home() {
                 </ButtonOpacity>
             </WrapperTop>
             <WrapperMain>
-                <WrapperInputs>
-                    <IconSearch
-                        style={styles.iconSearch}
-                    />
-                    <InputSearch
-                        onChangeText={setInputSearch}
-                        value={inputSearch}
-                        placeholder='Pesquisar serviços'
-                        placeholderTextColor={"rgba(128, 128, 133, 0.5)"}
-                        autoCapitalize="none"
-                    />
-                </WrapperInputs>
                 <ContainersButtons>
                     <WrapperButtonsTop>
                         <ContainerCardsButtons>

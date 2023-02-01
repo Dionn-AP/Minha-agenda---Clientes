@@ -2,18 +2,6 @@ import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
 
 
-export const WrapperTop = styled.View`
-    display: flex;
-    align-items: flex-end;
-    position: relative;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 80px;
-    width: 100%;
-    padding: 0 5%;
-    background-color: #09184D;
-`
-
 export const WrapperMain = styled.View`
     display: flex;
     position: relative;
@@ -26,6 +14,19 @@ export const WrapperMain = styled.View`
     border-top-left-radius: 20px;
     background-color: #EDF2FA;
     padding: 1% 6% 0;
+`
+
+export const Wrapper = styled.View`
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    background-color: #EDF2FA;
 `
 
 export const WrapperContent = styled.View`
@@ -124,6 +125,7 @@ export const styles = StyleSheet.create({
         zIndex: 2
     },
     input: {
+        
         width: "100%",
         height: "auto",
         position: "relative",

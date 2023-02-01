@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 
 export const WrapperTop = styled.View`
     display: flex;
+    position: relative;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
@@ -46,6 +47,7 @@ export const TextNameUser = styled.Text`
     font-weight: 600;
     font-size: 18px;
     color: #EDF2FA;
+    margin-bottom: 3%;
 `
 
 export const ButtonOpacity = styled.TouchableOpacity`

@@ -8,8 +8,15 @@ import {
     ButtonSchedule,
     TextSchedule,
     TextValue,
-    TextEmpty
+    ButtonScheduleDisable,
+    TextScheduleDisable,
+    TextEmpty,
+    ContainerSchedulesCount,
+    TextSchedulesCount,
+    styles
 } from './ViewServiceCompany_Styled';
+
+import IconSchedules from '../../assets/icon-schedules.svg';
 
 import { ActivityIndicator, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { IServices } from '../../types';
@@ -23,7 +30,7 @@ interface ServiceProps {
 export default function ViewServiceCompany({ companyId }: ServiceProps) {
     const [dataService, setDataService] = useState<IServices[] | any>();
 
-    async function getService(id: string) {
+    async function getService() {
         try {
             const response = await api.get(`/services/${companyId}`);
             setDataService(response.data);
@@ -33,11 +40,10 @@ export default function ViewServiceCompany({ companyId }: ServiceProps) {
     }
 
     useEffect(() => {
-        getService(companyId);
+        getService();
     }, []);
 
     return (
-
         <WrapperMain>
             <TextCenterViewService>
                 {dataService?.name_company}
@@ -54,13 +60,23 @@ export default function ViewServiceCompany({ companyId }: ServiceProps) {
                             return (
                                 <ContentInfoService
                                     key={service?._id}
+                                    pointerEvents={!service?.available ? 'none' : 'auto'}
+                                    style={{ opacity: service?.available ? 1 : 0.5 }}
                                 >
                                     <ConteinerTitles>
                                         <TitleService>{service?.name_service}</TitleService>
                                         <TouchableOpacity activeOpacity={0.7}>
-                                            <ButtonSchedule>
-                                                <TextSchedule>agendar</TextSchedule>
-                                            </ButtonSchedule>
+                                            {
+                                                service?.available ?
+                                                    <ButtonSchedule>
+                                                        <TextSchedule>agendar</TextSchedule>
+                                                    </ButtonSchedule>
+                                                    :
+                                                    <ButtonScheduleDisable>
+                                                        <TextScheduleDisable>indisponível</TextScheduleDisable>
+                                                    </ButtonScheduleDisable>
+                                            }
+
                                         </TouchableOpacity>
                                     </ConteinerTitles>
                                     <ConteinerValues>
@@ -72,6 +88,12 @@ export default function ViewServiceCompany({ companyId }: ServiceProps) {
                         })
                 }
             </ScrollView>
+            <ContainerSchedulesCount>
+                <TextSchedulesCount>0</TextSchedulesCount>
+                <IconSchedules
+                    style={styles.iconSchedule}
+                />
+            </ContainerSchedulesCount>
         </WrapperMain>
     )
 }

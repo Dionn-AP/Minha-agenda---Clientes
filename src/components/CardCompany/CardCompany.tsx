@@ -19,7 +19,6 @@ import api from '../../services/api';
 
 import { getHeaders } from '../../utils/services';
 import { useAuth } from '../../context/Auth';
-import { useNavigation } from '@react-navigation/native';
 
 interface CompanyProps {
     name: string;
